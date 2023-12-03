@@ -14,6 +14,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.3. Foundation", "3.3. Fou
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spriggan.Core", "src\Spriggan.Core\Spriggan.Core.csproj", "{D050F364-352E-4C71-AA60-70997BF7C16F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spriggan.Core.Transport", "src\Spriggan.Core.Transport\Spriggan.Core.Transport.csproj", "{8DC50940-34FB-4934-B66F-D8B62701D9CB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,11 +26,16 @@ Global
 		{A2AFEB08-9027-4ADB-99B6-EB02A4E094F3} = {85502A90-CC16-4119-972B-DC4DAF9BF521}
 		{55BB8D28-513B-4EBD-840E-1FEE34915904} = {85502A90-CC16-4119-972B-DC4DAF9BF521}
 		{D050F364-352E-4C71-AA60-70997BF7C16F} = {62155A97-2E41-4EB4-B92A-07CCE61400F2}
+		{8DC50940-34FB-4934-B66F-D8B62701D9CB} = {62155A97-2E41-4EB4-B92A-07CCE61400F2}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{D050F364-352E-4C71-AA60-70997BF7C16F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D050F364-352E-4C71-AA60-70997BF7C16F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D050F364-352E-4C71-AA60-70997BF7C16F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D050F364-352E-4C71-AA60-70997BF7C16F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8DC50940-34FB-4934-B66F-D8B62701D9CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8DC50940-34FB-4934-B66F-D8B62701D9CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8DC50940-34FB-4934-B66F-D8B62701D9CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8DC50940-34FB-4934-B66F-D8B62701D9CB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
