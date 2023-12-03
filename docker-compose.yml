@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  #
+  # Spriggan.Web
+  spriggan-web:
+    build:
+      context: ./
+      dockerfile: ./docker/build/spriggan-web/Dockerfile
+    image: ${REGISTRY}/spriggan-web
+    container_name: spriggan-web
