@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Spriggan.Core.Transport\Spriggan.Core.Transport.csproj" />
+      <ProjectReference Include="..\Spriggan.Core.Web\Spriggan.Core.Web.csproj" />
+      <ProjectReference Include="..\Spriggan.Core\Spriggan.Core.csproj" />
+      <ProjectReference Include="..\Spriggan.Data.Identity.Contracts\Spriggan.Data.Identity.Contracts.csproj" />
+      <ProjectReference Include="..\Spriggan.Foundation.Identity\Spriggan.Foundation.Identity.csproj" />
+      <ProjectReference Include="..\Spriggan.Module.Identity.Contracts\Spriggan.Module.Identity.Contracts.csproj" />
+    </ItemGroup>
+
+</Project>
