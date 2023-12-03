@@ -1,8 +1,25 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. Hosts", "1. Hosts", "{A004874F-7C55-4DAB-926E-1B8E3A39A382}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. Modules", "2. Modules", "{7EE6C50A-5F58-4C26-8843-985CF1E50A83}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. Building Blocks", "3. Building Blocks", "{85502A90-CC16-4119-972B-DC4DAF9BF521}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.1. Core", "3.1. Core", "{62155A97-2E41-4EB4-B92A-07CCE61400F2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.2. Data", "3.2. Data", "{A2AFEB08-9027-4ADB-99B6-EB02A4E094F3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.3. Foundation", "3.3. Foundation", "{55BB8D28-513B-4EBD-840E-1FEE34915904}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{62155A97-2E41-4EB4-B92A-07CCE61400F2} = {85502A90-CC16-4119-972B-DC4DAF9BF521}
+		{A2AFEB08-9027-4ADB-99B6-EB02A4E094F3} = {85502A90-CC16-4119-972B-DC4DAF9BF521}
+		{55BB8D28-513B-4EBD-840E-1FEE34915904} = {85502A90-CC16-4119-972B-DC4DAF9BF521}
 	EndGlobalSection
 EndGlobal
