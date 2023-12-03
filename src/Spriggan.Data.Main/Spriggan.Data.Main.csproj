@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Spriggan.Core.Data\Spriggan.Core.Data.csproj" />
+      <ProjectReference Include="..\Spriggan.Core\Spriggan.Core.csproj" />
+      <ProjectReference Include="..\Spriggan.Data.Main.Contracts\Spriggan.Data.Main.Contracts.csproj" />
+    </ItemGroup>
+
+</Project>
