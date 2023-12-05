@@ -32,7 +32,7 @@ public static class ConfigurationExtensions
     private static T GetOptions<T>(IConfiguration configuration, string path)
     {
         var source = typeof(T);
-        var options = configuration.GetSection(path).Load<T>();
+        var options = configuration.GetSection(path).Get<T>();
 
         if (options == null)
         {
