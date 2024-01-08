@@ -6,7 +6,7 @@ public interface IResult
 
     string Error { get; set; }
 
-    object? Metadata { get; set; }
+    IDictionary<string, object>? Metadata { get; set; }
 }
 
 public interface IResult<T> : IResult

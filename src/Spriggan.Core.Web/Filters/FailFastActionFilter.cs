@@ -18,7 +18,11 @@ public class FailFastActionFilter : IActionFilter
             .Select(error => error.ErrorMessage).ToArray();
 
         context.HttpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
-        context.Result = new ObjectResult(Result.Fail(Errors.Validation, validations));
+        
+        context.Result = new ObjectResult(Result.Fail(Errors.Validation, new Dictionary<string, object>
+        {
+            { "Validations", validations },
+        }));
     }
 
     public void OnActionExecuted(ActionExecutedContext context)

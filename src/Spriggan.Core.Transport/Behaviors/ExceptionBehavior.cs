@@ -38,9 +38,9 @@ public class ExceptionBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest
         {
             Ok = false,
             Error = Errors.Whoops,
-            Metadata = new
+            Metadata = new Dictionary<string, object>
             {
-                TraceIdentifier = id
+                { "TraceIdentifier", id },
             }
         });
     }

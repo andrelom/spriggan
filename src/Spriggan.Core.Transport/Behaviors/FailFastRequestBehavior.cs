@@ -36,9 +36,9 @@ public class FailFastRequestBehavior<TRequest, TResponse> : IPipelineBehavior<TR
         {
             Ok = false,
             Error = Errors.Validation,
-            Metadata = new
+            Metadata = new Dictionary<string, object>
             {
-                Validations = validations
+                { "Validations", validations },
             }
         };
     }

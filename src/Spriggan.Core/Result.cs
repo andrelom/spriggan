@@ -18,7 +18,7 @@ public sealed class Result : IResult
     /// <summary>
     /// Any information related to the Error.
     /// </summary>
-    public object? Metadata { get; set; }
+    public IDictionary<string, object>? Metadata { get; set; }
 
     /// <summary>
     /// Returns True if any of the reported errors match the current error.
@@ -48,7 +48,7 @@ public sealed class Result : IResult
     /// <param name="error">The resulting error.</param>
     /// <param name="metadata">Any information related to the Error.</param>
     /// <returns>A result.</returns>
-    public static Result Fail(string error, object? metadata = null)
+    public static Result Fail(string error, IDictionary<string, object>? metadata = null)
     {
         return new()
         {
@@ -103,7 +103,7 @@ public sealed class Result<T> : IResult<T>
     /// <summary>
     /// Any information related to the Error.
     /// </summary>
-    public object? Metadata { get; set; }
+    public IDictionary<string, object>? Metadata { get; set; }
 
     /// <summary>
     /// Returns True if any of the reported errors match the current error.
@@ -135,7 +135,7 @@ public sealed class Result<T> : IResult<T>
     /// <param name="error">The resulting error.</param>
     /// <param name="metadata">Any information related to the Error.</param>
     /// <returns>A result.</returns>
-    public static Result<T> Fail(string error, object? metadata = null)
+    public static Result<T> Fail(string error, IDictionary<string, object>? metadata = null)
     {
         return new()
         {

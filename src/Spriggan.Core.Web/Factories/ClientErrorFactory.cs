@@ -7,9 +7,9 @@ public class ClientErrorFactory : IClientErrorFactory
 {
     public IActionResult GetClientError(ActionContext context, IClientErrorActionResult error)
     {
-        var result = Result.Fail(Errors.Whoops, new
+        var result = Result.Fail(Errors.Whoops, new Dictionary<string, object>
         {
-            context.HttpContext.TraceIdentifier
+            { "TraceIdentifier", context.HttpContext.TraceIdentifier },
         });
 
         return new ObjectResult(result)

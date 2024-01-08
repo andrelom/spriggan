@@ -87,7 +87,10 @@ public class SignUpRequestHandler : IRequestHandler<SignUpRequest, Result<SignUp
 
         if (await _userManager.CreateAsync(user, request.Password) is { Succeeded: false } result)
         {
-            return Result.Fail(Errors.Validation, result.Errors.ToArray());
+            return Result.Fail(Errors.Validation, new Dictionary<string, object>
+            {
+                { "Validations", result.Errors.ToArray() },
+            });
         }
 
         return Result.Success();

@@ -43,9 +43,9 @@ public class ExceptionMiddleware
         context.Response.StatusCode = StatusCodes.Status500InternalServerError;
         context.Response.ContentType = MediaTypeNames.Application.Json;
 
-        var result = Result.Fail(Errors.Whoops, new
+        var result = Result.Fail(Errors.Whoops, new Dictionary<string, object>
         {
-            context.TraceIdentifier
+            { "TraceIdentifier", context.TraceIdentifier },
         });
 
         await context.Response.WriteAsync(result.ToJson());
