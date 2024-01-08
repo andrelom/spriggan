@@ -70,16 +70,22 @@ public class Startup
     // Be aware that any change in method call order can result in unexpected behavior.
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
+        // Step: 01
         app.UseRateLimiter();
 
+        // Step: 02
         app.UseCoreWebRequestLocalization(_configuration);
 
+        // Step: 03
         app.UseCoreWebMiddlewares();
 
+        // Step: 04
         app.UseRouting();
 
+        // Step: 05
         app.UseFoundationIdentity();
 
+        // Step: 06
         app.UseCoreWebEndpoints();
     }
 
