@@ -12,6 +12,7 @@ public static class DependencyInjectionConfiguration
         // Services
 
         services
+            .AddScoped<ICache, MemoryCache>()
             .AddScoped<IMemoryCache, MemoryCache>();
 
         return services;
