@@ -40,7 +40,7 @@ public class ExceptionBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest
             Error = Errors.Whoops,
             Metadata = new Dictionary<string, object>
             {
-                { "TraceIdentifier", id },
+                { "Trace", id },
             }
         });
     }
