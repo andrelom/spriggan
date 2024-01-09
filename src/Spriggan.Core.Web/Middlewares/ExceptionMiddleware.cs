@@ -38,7 +38,7 @@ public class ExceptionMiddleware
     {
         _logger.LogError(ex, "Exception Handler Middleware ({0})", context.TraceIdentifier);
 
-        context.Response.Headers.Add(HeaderNames.CacheControl, "no-cache, no-store, must-revalidate");
+        context.Response.Headers.Append(HeaderNames.CacheControl, "no-cache, no-store, must-revalidate");
 
         context.Response.StatusCode = StatusCodes.Status500InternalServerError;
         context.Response.ContentType = MediaTypeNames.Application.Json;
