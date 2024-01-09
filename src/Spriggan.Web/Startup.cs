@@ -39,7 +39,8 @@ public class Startup
         services
             .AddCoreWeb()
             .AddCoreWebRateLimiter(_configuration)
-            .AddCoreWebControllers(AddCoreWebControllers);
+            .AddCoreWebControllers(AddCoreWebControllers)
+            .AddCoreWebSwagger(AddSwagger);
 
         //
         // Core Transport
