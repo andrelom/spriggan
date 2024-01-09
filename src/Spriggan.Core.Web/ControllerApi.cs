@@ -6,6 +6,7 @@ namespace Spriggan.Core.Web;
 [Route("[controller]")]
 public abstract class ControllerApi : ControllerBase
 {
+    [ApiExplorerSettings(IgnoreApi = true)]
     public new OkObjectResult Ok()
     {
         return base.Ok(new { });
