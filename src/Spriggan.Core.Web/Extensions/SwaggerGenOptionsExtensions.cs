@@ -1,3 +1,5 @@
+using Asp.Versioning;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Spriggan.Core.Web.Swagger;
@@ -26,7 +28,7 @@ internal static class SwaggerGenOptionsExtensions
         options.OperationFilter<VersionOperationFilter>();
 
         // Used to exclude endpoint mapped to not specified in Swagger version.
-        // options.DocInclusionPredicate(GetDocInclusionPredicate);
+        options.DocInclusionPredicate(GetDocInclusionPredicate);
 
         // Avoid Swagger generation error due to same method name in different versions.
         options.ResolveConflictingActions(descriptions => descriptions.First());
@@ -59,19 +61,19 @@ internal static class SwaggerGenOptionsExtensions
 
     #region Private Methods
 
-    // private static bool GetDocInclusionPredicate(string version, ApiDescription description)
-    // {
-    //     if (!description.TryGetMethodInfo(out var method) || method.DeclaringType == null)
-    //     {
-    //         return false;
-    //     }
-    //
-    //     return method.DeclaringType
-    //         .GetCustomAttributes(true)
-    //         .OfType<ApiVersionAttribute>()
-    //         .SelectMany(attribute => attribute.Versions)
-    //         .Any(value => $"v{value}".Equals(version, StringComparison.OrdinalIgnoreCase));
-    // }
+    private static bool GetDocInclusionPredicate(string version, ApiDescription description)
+    {
+        if (!description.TryGetMethodInfo(out var method) || method.DeclaringType == null)
+        {
+            return false;
+        }
+
+        return method.DeclaringType
+            .GetCustomAttributes(true)
+            .OfType<ApiVersionAttribute>()
+            .SelectMany(attribute => attribute.Versions)
+            .Any(value => $"v{value}".Equals(version, StringComparison.OrdinalIgnoreCase));
+    }
 
     #endregion
 }

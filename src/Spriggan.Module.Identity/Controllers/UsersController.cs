@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Asp.Versioning;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Spriggan.Core;
 using Spriggan.Core.Transport;
@@ -9,6 +10,7 @@ using Spriggan.Module.Identity.Contracts.Features.GetUserByName;
 
 namespace Spriggan.Module.Identity.Controllers;
 
+[ApiVersion("1")]
 public class UsersController : ControllerApi
 {
     private readonly IMediator _mediator;

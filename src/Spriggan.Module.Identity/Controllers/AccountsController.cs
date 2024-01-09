@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Asp.Versioning;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Spriggan.Core;
@@ -13,6 +14,7 @@ using Spriggan.Module.Identity.Contracts.Features.SignUp;
 
 namespace Spriggan.Module.Identity.Controllers;
 
+[ApiVersion("1")]
 public class AccountsController : ControllerApi
 {
     private readonly IMediator _mediator;

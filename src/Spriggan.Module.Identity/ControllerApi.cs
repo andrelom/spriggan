@@ -2,7 +2,7 @@
 
 namespace Spriggan.Module.Identity;
 
-[Route("identity/[controller]")]
+[Route("v{version:apiVersion}/identity/[controller]")]
 public abstract class ControllerApi : Core.Web.ControllerApi
 {
     // Intentionally left empty.
