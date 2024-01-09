@@ -9,7 +9,7 @@ public class ClientErrorFactory : IClientErrorFactory
     {
         var result = Result.Fail(Errors.Whoops, new Dictionary<string, object>
         {
-            { "TraceIdentifier", context.HttpContext.TraceIdentifier },
+            { "Trace", context.HttpContext.TraceIdentifier },
         });
 
         return new ObjectResult(result)
