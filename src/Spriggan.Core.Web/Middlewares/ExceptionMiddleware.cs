@@ -45,7 +45,7 @@ public class ExceptionMiddleware
 
         var result = Result.Fail(Errors.Whoops, new Dictionary<string, object>
         {
-            { "TraceIdentifier", context.TraceIdentifier },
+            { "Trace", context.TraceIdentifier },
         });
 
         await context.Response.WriteAsync(result.ToJson());
