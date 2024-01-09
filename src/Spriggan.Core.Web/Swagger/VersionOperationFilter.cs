@@ -7,9 +7,12 @@ internal sealed class VersionOperationFilter : IOperationFilter
 {
     public void Apply(OpenApiOperation operation, OperationFilterContext context)
     {
-        var version = operation.Parameters.Single(parameter =>
+        var version = operation.Parameters.FirstOrDefault(parameter =>
             parameter.Name.Equals("version", StringComparison.OrdinalIgnoreCase));
 
-        operation.Parameters.Remove(version);
+        if (version != null)
+        {
+            operation.Parameters.Remove(version);
+        }
     }
 }
