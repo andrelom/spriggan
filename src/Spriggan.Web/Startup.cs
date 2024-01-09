@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.OpenApi.Models;
 using Spriggan.Core;
 using Spriggan.Core.Transport;
 using Spriggan.Core.Web;
@@ -9,6 +10,8 @@ using Spriggan.Foundation.Identity;
 using Spriggan.Foundation.Mail;
 using Spriggan.Module.Identity;
 using Spriggan.Module.Main;
+using Swashbuckle.AspNetCore.SwaggerGen;
+using Swashbuckle.AspNetCore.SwaggerUI;
 
 namespace Spriggan.Web;
 
@@ -87,6 +90,9 @@ public class Startup
 
         // Step: 06
         app.UseCoreWebEndpoints();
+
+        // Step: 07
+        app.UseCoreWebSwagger(UseSwagger);
     }
 
     #region Private Methods: Add
@@ -94,6 +100,20 @@ public class Startup
     private void AddCoreWebControllers(MvcOptions options)
     {
         options.AddAddFoundationIdentity();
+    }
+
+    private void AddSwagger(SwaggerGenOptions options)
+    {
+        options.SwaggerDoc("v1", new OpenApiInfo { Title = "Spriggan.Web", Version = "v1" });
+    }
+
+    #endregion
+
+    #region Private Methods: Use
+
+    private void UseSwagger(SwaggerUIOptions options)
+    {
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "Spriggan.Web v1");
     }
 
     #endregion
