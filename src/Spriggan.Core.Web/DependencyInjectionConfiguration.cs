@@ -10,10 +10,13 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Spriggan.Core.Extensions;
+using Spriggan.Core.Web.Extensions;
 using Spriggan.Core.Web.Factories;
 using Spriggan.Core.Web.Filters;
 using Spriggan.Core.Web.Middlewares;
 using Spriggan.Core.Web.Options;
+using Swashbuckle.AspNetCore.SwaggerGen;
+using Swashbuckle.AspNetCore.SwaggerUI;
 using RateLimiterOptions = Spriggan.Core.Web.Options.RateLimiterOptions;
 
 namespace Spriggan.Core.Web;
@@ -72,6 +75,22 @@ public static class DependencyInjectionConfiguration
         return services;
     }
 
+    public static IServiceCollection AddCoreWebSwagger(this IServiceCollection services, Action<SwaggerGenOptions> setup = null!)
+    {
+        services.AddSwaggerGen(options =>
+        {
+            options.LowercaseDocuments();
+
+            options.AspNetCoreVersioning();
+
+            options.AddSecurity();
+
+            setup?.Invoke(options);
+        });
+
+        return services;
+    }
+
     #endregion
 
     #region For: IApplicationBuilder
@@ -110,6 +129,22 @@ public static class DependencyInjectionConfiguration
             endpoints.MapControllers();
 
             setup?.Invoke(endpoints);
+        });
+
+        return app;
+    }
+
+    public static IApplicationBuilder UseCoreWebSwagger(this IApplicationBuilder app, Action<SwaggerUIOptions> setup = null!)
+    {
+        app.UseSwagger();
+
+        app.UseSwaggerUI(options =>
+        {
+            options.RoutePrefix = "-/swagger";
+
+            options.DefaultModelsExpandDepth(-1);
+
+            setup?.Invoke(options);
         });
 
         return app;
