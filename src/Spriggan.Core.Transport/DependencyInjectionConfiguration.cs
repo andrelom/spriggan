@@ -22,6 +22,11 @@ public static class DependencyInjectionConfiguration
 
         services.AddTransient<IMediator, Mediator>();
 
+        //
+        // Hosted Services
+
+        services.AddHostedService<ConsumerHostedService>();
+
         return services;
     }
 
