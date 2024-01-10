@@ -10,15 +10,12 @@ public interface IBus
         RequestTimeout timeout = default)
         where TRequest : class
         where TResponse : class;
-}
 
+    #region Nested Interfaces
 
-public interface ILocalBus : MassTransit.IBus
-{
-    // Intentionally left empty.
-}
+    public interface ILocal : MassTransit.IBus;
 
-public interface IRemoteBus : MassTransit.IBus
-{
-    // Intentionally left empty.
+    public interface IRemote : MassTransit.IBus;
+
+    #endregion
 }
