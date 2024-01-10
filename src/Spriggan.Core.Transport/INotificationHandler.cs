@@ -1,6 +1,6 @@
 namespace Spriggan.Core.Transport;
 
-public interface INotificationHandler<in TNotification> : MediatR.INotificationHandler<TNotification>
+public interface INotificationHandler<in TNotification>
     where TNotification : INotification
 {
     // Intentionally left empty.

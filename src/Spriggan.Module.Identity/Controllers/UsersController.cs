@@ -13,11 +13,11 @@ namespace Spriggan.Module.Identity.Controllers;
 [ApiVersion("1")]
 public class UsersController : ControllerApi
 {
-    private readonly IMediator _mediator;
+    private readonly IBus _bus;
 
-    public UsersController(IMediator mediator)
+    public UsersController(IBus bus)
     {
-        _mediator = mediator;
+        _bus = bus;
     }
 
     [UserRoles(Roles.Administrator.Name)]
@@ -26,7 +26,7 @@ public class UsersController : ControllerApi
     [ProducesResponseType(typeof(Result<GetAllUserResponse>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetAll([FromQuery] GetAllUserRequest request)
     {
-        var response = await _mediator.Send(request);
+        var response = await _bus.Request<GetAllUserRequest, Result<GetAllUserResponse>>(request);
 
         return response.Ok
             ? Ok(response)
@@ -39,7 +39,7 @@ public class UsersController : ControllerApi
     [ProducesResponseType(typeof(Result<GetUserByNameResponse>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetByName([FromRoute] GetUserByNameRequest request)
     {
-        var response = await _mediator.Send(request);
+        var response = await _bus.Request<GetUserByNameRequest, Result<GetUserByNameResponse>>(request);
 
         return response.Ok
             ? Ok(response)

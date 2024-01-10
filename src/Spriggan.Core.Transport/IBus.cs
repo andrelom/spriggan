@@ -4,7 +4,7 @@ namespace Spriggan.Core.Transport;
 
 public interface IBus
 {
-    Task<Response<TResponse>> Request<TRequest, TResponse>(
+    Task<TResponse> Request<TRequest, TResponse>(
         TRequest message,
         CancellationToken token = default,
         RequestTimeout timeout = default)

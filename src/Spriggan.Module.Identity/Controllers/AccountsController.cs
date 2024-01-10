@@ -17,11 +17,11 @@ namespace Spriggan.Module.Identity.Controllers;
 [ApiVersion("1")]
 public class AccountsController : ControllerApi
 {
-    private readonly IMediator _mediator;
+    private readonly IBus _bus;
 
-    public AccountsController(IMediator mediator)
+    public AccountsController(IBus bus)
     {
-        _mediator = mediator;
+        _bus = bus;
     }
 
     [AllowAnonymous]
@@ -30,7 +30,7 @@ public class AccountsController : ControllerApi
     [ProducesResponseType(typeof(Result<SignInResponse>), StatusCodes.Status200OK)]
     public async Task<IActionResult> SignIn([FromBody] SignInRequest request)
     {
-        var response = await _mediator.Send(request);
+        var response = await _bus.Request<SignInRequest, Result<SignInResponse>>(request);
 
         if (response.IsError(Errors.Validation))
         {
@@ -48,7 +48,7 @@ public class AccountsController : ControllerApi
     [ProducesResponseType(typeof(Result<SignUpResponse>), StatusCodes.Status200OK)]
     public async Task<IActionResult> SignUp([FromBody] SignUpRequest request)
     {
-        var response = await _mediator.Send(request);
+        var response = await _bus.Request<SignUpRequest, Result<SignUpResponse>>(request);
 
         return response.Ok
             ? Ok(response)
@@ -61,7 +61,7 @@ public class AccountsController : ControllerApi
     [ProducesResponseType(typeof(Result<SendResetPasswordTokenResponse>), StatusCodes.Status200OK)]
     public async Task<IActionResult> ForgotPassword([FromBody] SendResetPasswordTokenRequest request)
     {
-        var response = await _mediator.Send(request);
+        var response = await _bus.Request<SendResetPasswordTokenRequest, Result<SendResetPasswordTokenResponse>>(request);
 
         return response.Ok
             ? Ok(response)
@@ -74,7 +74,7 @@ public class AccountsController : ControllerApi
     [ProducesResponseType(typeof(Result<ResetPasswordResponse>), StatusCodes.Status200OK)]
     public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequest request)
     {
-        var response = await _mediator.Send(request);
+        var response = await _bus.Request<ResetPasswordRequest, Result<ResetPasswordResponse>>(request);
 
         if (response.Ok)
         {

@@ -10,7 +10,7 @@ using Spriggan.Module.Identity.Contracts.Features.SignUp;
 
 namespace Spriggan.Module.Identity.Features.SignUp;
 
-public class SignUpRequestHandler : IRequestHandler<SignUpRequest, Result<SignUpResponse>>
+public class SignUpRequestHandler : RequestHandler<SignUpRequest, Result<SignUpResponse>>
 {
     private readonly ILogger<SignUpRequestHandler> _logger;
 
@@ -24,7 +24,7 @@ public class SignUpRequestHandler : IRequestHandler<SignUpRequest, Result<SignUp
         _userManager = userManager;
     }
 
-    public async Task<Result<SignUpResponse>> Handle(
+    protected override async Task<Result<SignUpResponse>> Handle(
         SignUpRequest request,
         CancellationToken cancel = default)
     {

@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Spriggan.Core.Transport;
 using DbContext = Spriggan.Core.Data.DbContext;
 
 namespace Spriggan.Data.Main;
@@ -8,7 +7,7 @@ public class ApplicationDbContext : DbContext
 {
     private readonly Type _type = typeof(ApplicationDbContext);
 
-    public ApplicationDbContext(IMediator mediator, DbContextOptions<ApplicationDbContext> options) : base(mediator, options)
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
     {
         // Intentionally left empty.
     }

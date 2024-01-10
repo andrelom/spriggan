@@ -8,7 +8,7 @@ using Spriggan.Module.Identity.Contracts.Features.GetUserByName;
 
 namespace Spriggan.Module.Identity.Features.GetUserByName;
 
-public class GetUserByNameRequestHandler : IRequestHandler<GetUserByNameRequest, Result<GetUserByNameResponse>>
+public class GetUserByNameRequestHandler : RequestHandler<GetUserByNameRequest, Result<GetUserByNameResponse>>
 {
     private readonly IMapper _mapper;
 
@@ -22,7 +22,7 @@ public class GetUserByNameRequestHandler : IRequestHandler<GetUserByNameRequest,
         _userManager = userManager;
     }
 
-    public async Task<Result<GetUserByNameResponse>> Handle(GetUserByNameRequest request, CancellationToken cancel = default)
+    protected override async Task<Result<GetUserByNameResponse>> Handle(GetUserByNameRequest request, CancellationToken cancel = default)
     {
         var user = await _userManager.FindByNameAsync(request.UserName);
 

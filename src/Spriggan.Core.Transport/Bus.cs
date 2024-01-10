@@ -16,21 +16,27 @@ public class Bus : IBus
         _remote = remote;
     }
 
-    public async Task<Response<TResponse>> Request<TRequest, TResponse>(
+    public async Task<TResponse> Request<TRequest, TResponse>(
         TRequest message,
         CancellationToken token = default,
         RequestTimeout timeout = default)
         where TRequest : class
         where TResponse : class
     {
+        Response<TResponse> response;
+
         var local = _types.Any(type => type == typeof(IConsumer<TRequest>));
 
         if (local)
         {
-            return await _local.Request<TRequest, TResponse>(message, token, timeout);
+            response = await _local.Request<TRequest, TResponse>(message, token, timeout);
+        }
+        else
+        {
+            response = await _remote.Request<TRequest, TResponse>(message, token, timeout);
         }
 
-        return await _remote.Request<TRequest, TResponse>(message, token, timeout);
+        return response.Message;
     }
 
     #region Private Methods

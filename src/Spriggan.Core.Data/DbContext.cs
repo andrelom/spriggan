@@ -1,17 +1,14 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Spriggan.Core.Data.Extensions;
-using Spriggan.Core.Transport;
 
 namespace Spriggan.Core.Data;
 
 public abstract class DbContext : Microsoft.EntityFrameworkCore.DbContext, IUnitOfWork
 {
-    private readonly IMediator _mediator;
-
-    protected DbContext(IMediator mediator, DbContextOptions options) : base(options)
+    protected DbContext(DbContextOptions options) : base(options)
     {
-        _mediator = mediator;
+        // Intentionally left empty.
     }
 
     public async Task<bool> Commit()
@@ -20,10 +17,7 @@ public abstract class DbContext : Microsoft.EntityFrameworkCore.DbContext, IUnit
 
         Prepare(entries);
 
-        if (await base.SaveChangesAsync() > 0 is var ok)
-        {
-            await _mediator.NotifyDbContextChanges(entries);
-        }
+        var ok = await base.SaveChangesAsync() > 0;
 
         return ok;
     }

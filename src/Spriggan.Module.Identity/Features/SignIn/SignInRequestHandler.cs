@@ -9,7 +9,7 @@ using Spriggan.Module.Identity.Providers;
 
 namespace Spriggan.Module.Identity.Features.SignIn;
 
-public class SignInRequestHandler : IRequestHandler<SignInRequest, Result<SignInResponse>>
+public class SignInRequestHandler : RequestHandler<SignInRequest, Result<SignInResponse>>
 {
     private readonly UserManager<User> _userManager;
 
@@ -23,7 +23,7 @@ public class SignInRequestHandler : IRequestHandler<SignInRequest, Result<SignIn
         _securityTokenProvider = securityTokenProvider;
     }
 
-    public async Task<Result<SignInResponse>> Handle(SignInRequest request, CancellationToken cancel = default)
+    protected override async Task<Result<SignInResponse>> Handle(SignInRequest request, CancellationToken cancel = default)
     {
         if (await AuthorizeUser(request.UserName, request.Password) is not { } user)
         {

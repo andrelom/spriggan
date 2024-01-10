@@ -7,7 +7,7 @@ using Spriggan.Module.Identity.Contracts.Features.ResetPassword;
 
 namespace Spriggan.Module.Identity.Features.ResetPassword;
 
-public class ResetPasswordRequestHandler : IRequestHandler<ResetPasswordRequest, Result<ResetPasswordResponse>>
+public class ResetPasswordRequestHandler : RequestHandler<ResetPasswordRequest, Result<ResetPasswordResponse>>
 {
     private readonly UserManager<User> _userManager;
 
@@ -16,7 +16,7 @@ public class ResetPasswordRequestHandler : IRequestHandler<ResetPasswordRequest,
         _userManager = userManager;
     }
 
-    public async Task<Result<ResetPasswordResponse>> Handle(ResetPasswordRequest request, CancellationToken cancel = default)
+    protected override async Task<Result<ResetPasswordResponse>> Handle(ResetPasswordRequest request, CancellationToken cancel = default)
     {
         var user = await _userManager.FindByNameAsync(request.UserName);
 

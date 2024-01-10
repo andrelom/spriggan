@@ -8,7 +8,7 @@ using Spriggan.Module.Identity.Contracts.Features.GetAllUser;
 
 namespace Spriggan.Module.Identity.Features.GetAllUser;
 
-public class GetAllUserRequestHandler : IRequestHandler<GetAllUserRequest, Result<GetAllUserResponse>>
+public class GetAllUserRequestHandler : RequestHandler<GetAllUserRequest, Result<GetAllUserResponse>>
 {
     private readonly IMapper _mapper;
 
@@ -22,7 +22,7 @@ public class GetAllUserRequestHandler : IRequestHandler<GetAllUserRequest, Resul
         _userManager = userManager;
     }
 
-    public Task<Result<GetAllUserResponse>> Handle(GetAllUserRequest request, CancellationToken cancel = default)
+    protected override Task<Result<GetAllUserResponse>> Handle(GetAllUserRequest request, CancellationToken cancel = default)
     {
         var users = _userManager.Users
             .OrderBy(user => user.NormalizedUserName)
