@@ -88,10 +88,8 @@ public class Consumer : IHostedService
     {
         foreach (var name in _names)
         {
-            var queue = $"request#{name}";
-
             _channel.QueueDeclare(
-                queue: queue,
+                queue: $"request#{name}",
                 durable: false,
                 exclusive: false,
                 autoDelete: false);
