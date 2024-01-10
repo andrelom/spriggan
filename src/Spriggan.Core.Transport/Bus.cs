@@ -39,8 +39,7 @@ public class Bus : IBus
     {
         return Dependencies.Types
             .SelectMany(type => type.GetInterfaces())
-            .Where(type => type.IsGenericType)
-            .Select(type => type.GetGenericTypeDefinition());
+            .Where(type => type.IsGenericType);
     }
 
     #endregion
