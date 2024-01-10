@@ -53,7 +53,7 @@ public static class DependencyInjectionConfiguration
             // Consumers.
             configurator.AddConsumers(Dependencies.Assemblies.ToArray());
 
-            // RabbitMq Transport.
+            // RabbitMQ Transport.
             configurator.UsingRabbitMq((context, cfg) =>
             {
                 cfg.Host(options.Host, "/", (host) => {
