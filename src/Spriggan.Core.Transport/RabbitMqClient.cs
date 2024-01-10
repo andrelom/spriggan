@@ -39,15 +39,15 @@ public class RabbitMqClient : IRabbitMqClient
         DeclareQueues("response");
     }
 
+    public IModel Channel => _channel;
+
+    public EventingBasicConsumer Consumer => _consumer;
+
     public void Dispose()
     {
         _channel.Close();
         _connection.Close();
     }
-
-    public IModel Channel => _channel;
-
-    public EventingBasicConsumer Consumer => _consumer;
 
     #region Private Methods
 
