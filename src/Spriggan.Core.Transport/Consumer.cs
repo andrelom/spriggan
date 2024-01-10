@@ -22,12 +22,12 @@ public class Consumer : IHostedService
 
     public Consumer(ILogger<Consumer> logger, IConfiguration configuration)
     {
-        var connection =  CreateConnection();
-
         _logger = logger;
         _options = configuration.Load<RabbitMqOptions>();
-        _connection = connection;
-        _channel = connection.CreateModel();
+        _connection = CreateConnection();
+        _channel = _connection.CreateModel();
+
+        DeclareQueues();
     }
 
     public Task StartAsync(CancellationToken cancellationToken)
@@ -82,6 +82,20 @@ public class Consumer : IHostedService
         };
 
         return factory.CreateConnection();
+    }
+
+    private void DeclareQueues()
+    {
+        foreach (var name in _names)
+        {
+            var queue = $"request#{name}";
+
+            _channel.QueueDeclare(
+                queue: queue,
+                durable: false,
+                exclusive: false,
+                autoDelete: false);
+        }
     }
 
     #endregion
