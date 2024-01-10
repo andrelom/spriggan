@@ -1,3 +1,4 @@
+using MassTransit;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,8 +15,8 @@ public static class DependencyInjectionConfiguration
         //
         // Libraries
 
-        // DI from "MediatR".
-        AddMediatR(services);
+        // DI from "MassTransit".
+        AddMassTransit(services);
 
         //
         // Services
@@ -41,6 +42,40 @@ public static class DependencyInjectionConfiguration
         // Do not change the order.
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(FailFastRequestBehavior<,>));
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ExceptionBehavior<,>));
+    }
+
+    private static void AddMassTransit(IServiceCollection services)
+    {
+        // Bus: Local
+        services.AddMassTransit<ILocalBus>(configurator =>
+        {
+            // Consumers.
+            configurator.AddConsumers(Dependencies.Assemblies.ToArray());
+
+            // In Memory Transport.
+            configurator.UsingInMemory((context, cfg) =>
+            {
+                cfg.ConfigureEndpoints(context);
+            });
+        });
+
+        // Bus: Remote
+        services.AddMassTransit<IRemoteBus>(configurator =>
+        {
+            // Consumers.
+            configurator.AddConsumers(Dependencies.Assemblies.ToArray());
+
+            // RabbitMq Transport.
+            configurator.UsingRabbitMq((context, cfg) =>
+            {
+                cfg.Host("localhost", "/", (host) => {
+                    host.Username("guest");
+                    host.Password("guest");
+                });
+
+                cfg.ConfigureEndpoints(context);
+            });
+        });
     }
 
     #endregion
