@@ -25,7 +25,7 @@ public static class DependencyInjectionConfiguration
         //
         // Hosted Services
 
-        services.AddHostedService<ConsumerHostedService>();
+        services.AddHostedService<Consumer>();
 
         return services;
     }
