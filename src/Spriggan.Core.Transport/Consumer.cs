@@ -22,10 +22,12 @@ public class Consumer : IHostedService
 
     public Consumer(ILogger<Consumer> logger, IConfiguration configuration)
     {
+        var connection = CreateConnection();
+
         _logger = logger;
         _options = configuration.Load<RabbitMqOptions>();
-        _connection = CreateConnection();
-        _channel = _connection.CreateModel();
+        _connection = connection;
+        _channel = connection.CreateModel();
 
         DeclareQueues("request");
         DeclareQueues("response");
