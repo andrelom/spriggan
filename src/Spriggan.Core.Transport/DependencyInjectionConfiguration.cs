@@ -43,6 +43,7 @@ public static class DependencyInjectionConfiguration
             // In Memory Transport.
             configurator.UsingInMemory((context, cfg) =>
             {
+                // Endpoints.
                 cfg.ConfigureEndpoints(context);
             });
         });
@@ -56,11 +57,13 @@ public static class DependencyInjectionConfiguration
             // RabbitMQ Transport.
             configurator.UsingRabbitMq((context, cfg) =>
             {
+                // Host.
                 cfg.Host(options.Host, "/", (host) => {
                     host.Username(options.User);
                     host.Password(options.Password);
                 });
 
+                // Endpoints.
                 cfg.ConfigureEndpoints(context);
             });
         });
