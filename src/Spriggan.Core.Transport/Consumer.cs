@@ -27,7 +27,8 @@ public class Consumer : IHostedService
         _connection = CreateConnection();
         _channel = _connection.CreateModel();
 
-        DeclareQueues();
+        DeclareQueues("request");
+        DeclareQueues("response");
     }
 
     public Task StartAsync(CancellationToken cancellationToken)
@@ -84,12 +85,12 @@ public class Consumer : IHostedService
         return factory.CreateConnection();
     }
 
-    private void DeclareQueues()
+    private void DeclareQueues(string prefix)
     {
         foreach (var name in _names)
         {
             _channel.QueueDeclare(
-                queue: $"request#{name}",
+                queue: $"${prefix}#{name}",
                 durable: false,
                 exclusive: false,
                 autoDelete: false);
