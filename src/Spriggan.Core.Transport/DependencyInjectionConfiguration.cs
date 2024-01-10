@@ -46,6 +46,8 @@ public static class DependencyInjectionConfiguration
 
     private static void AddMassTransit(IServiceCollection services)
     {
+        services.AddScoped<IBus, Bus>();
+
         // Bus: Local
         services.AddMassTransit<ILocalBus>(configurator =>
         {
