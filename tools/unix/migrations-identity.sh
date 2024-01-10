@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ./tools/util.sh
+source ./tools/unix/util.sh
 
 set_environment_variables
 
