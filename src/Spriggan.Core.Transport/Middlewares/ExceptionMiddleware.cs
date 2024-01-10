@@ -13,11 +13,11 @@ public class ExceptionMiddleware<TRequest, TResponse>: IMiddleware<TRequest, TRe
         _logger = logger;
     }
 
-    public async Task<TResponse> Handle(RequestDelegate<TRequest, TResponse> next, CancellationToken cancel)
+    public async Task<TResponse> Handle(TRequest request, RequestDelegate<TRequest, TResponse> next, CancellationToken cancel)
     {
         try
         {
-            return await next();
+            return await next(request);
         }
         catch (Exception ex)
         {
