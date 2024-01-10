@@ -45,10 +45,9 @@ public class RabbitMqClient : IRabbitMqClient
         _connection.Close();
     }
 
-    public void AddConsumer(EventHandler<BasicDeliverEventArgs> consumer)
-    {
-        _consumer.Received += consumer;
-    }
+    public IModel Channel => _channel;
+
+    public EventingBasicConsumer Consumer => _consumer;
 
     #region Private Methods
 
