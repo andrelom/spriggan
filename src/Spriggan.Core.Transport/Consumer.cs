@@ -1,8 +1,10 @@
+using System.Text;
 using System.Text.RegularExpressions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
 using Spriggan.Core.Extensions;
 using Spriggan.Core.Transport.Options;
 
@@ -35,6 +37,16 @@ public class Consumer : IHostedService
 
     public Task StartAsync(CancellationToken cancellationToken)
     {
+        var consumer = new EventingBasicConsumer(_channel);
+
+        consumer.Received += (_, deliver) =>
+        {
+            var body = deliver.Body.ToArray();
+            var message = Encoding.UTF8.GetString(body);
+
+            _logger.LogInformation($"Received message: {message}");
+        };
+
         return Task.CompletedTask;
     }
 
