@@ -1,6 +1,8 @@
 using MassTransit;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Spriggan.Core.Extensions;
+using Spriggan.Core.Transport.Options;
 
 namespace Spriggan.Core.Transport;
 
@@ -14,7 +16,7 @@ public static class DependencyInjectionConfiguration
         // Libraries
 
         // DI from "MassTransit".
-        AddMassTransit(services);
+        AddMassTransit(services, configuration);
 
         //
         // Services
@@ -28,8 +30,10 @@ public static class DependencyInjectionConfiguration
 
     #region Private Methods
 
-    private static void AddMassTransit(IServiceCollection services)
+    private static void AddMassTransit(IServiceCollection services, IConfiguration configuration)
     {
+        var options = configuration.Load<RabbitMqOptions>();
+
         // Bus: Local
         services.AddMassTransit<ILocalBus>(configurator =>
         {
@@ -52,9 +56,9 @@ public static class DependencyInjectionConfiguration
             // RabbitMq Transport.
             configurator.UsingRabbitMq((context, cfg) =>
             {
-                cfg.Host("localhost", "/", (host) => {
-                    host.Username("guest");
-                    host.Password("guest");
+                cfg.Host(options.Host, "/", (host) => {
+                    host.Username(options.User);
+                    host.Password(options.Password);
                 });
 
                 cfg.ConfigureEndpoints(context);
