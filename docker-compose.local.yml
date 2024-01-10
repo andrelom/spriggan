@@ -25,12 +25,18 @@ services:
     container_name: spriggan-rabbitmq
     ports:
       - 5672:5672
-      - 15672:15672
     networks:
       - spriggan
     environment:
       - RABBITMQ_DEFAULT_USER=guest
       - RABBITMQ_DEFAULT_PASS=guest
+    labels:
+      - traefik.enable=true
+      # Default
+      - traefik.http.services.spriggan-rabbitmq.loadbalancer.server.port=15672
+      - traefik.http.routers.spriggan-rabbitmq.service=spriggan-rabbitmq
+      - traefik.http.routers.spriggan-rabbitmq.entrypoints=web
+      - traefik.http.routers.spriggan-rabbitmq.rule=Host(`rabbitmq.spriggan.localhost`)
   #
   # PostgreSQL
   spriggan-postgres:
@@ -59,8 +65,11 @@ services:
       - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
     labels:
       - traefik.enable=true
-      - traefik.http.routers.spriggan-pgadmin.rule=Host(`pgadmin.spriggan.localhost`)
+      # Default
+      - traefik.http.services.spriggan-pgadmin.loadbalancer.server.port=80
+      - traefik.http.routers.spriggan-pgadmin.service=spriggan-pgadmin
       - traefik.http.routers.spriggan-pgadmin.entrypoints=web
+      - traefik.http.routers.spriggan-pgadmin.rule=Host(`pgadmin.spriggan.localhost`)
     depends_on:
       - spriggan-postgres
 
