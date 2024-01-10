@@ -35,7 +35,7 @@ public static class DependencyInjectionConfiguration
         var options = configuration.Load<RabbitMqOptions>();
 
         // Bus: Local
-        services.AddMassTransit<ILocalBus>(configurator =>
+        services.AddMassTransit<IBus.ILocal>(configurator =>
         {
             // Consumers.
             configurator.AddConsumers(Dependencies.Assemblies.ToArray());
@@ -48,7 +48,7 @@ public static class DependencyInjectionConfiguration
         });
 
         // Bus: Remote
-        services.AddMassTransit<IRemoteBus>(configurator =>
+        services.AddMassTransit<IBus.IRemote>(configurator =>
         {
             // Consumers.
             configurator.AddConsumers(Dependencies.Assemblies.ToArray());
