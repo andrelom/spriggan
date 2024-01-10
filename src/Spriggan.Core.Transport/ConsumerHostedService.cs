@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
@@ -9,7 +10,7 @@ public class ConsumerHostedService : IHostedService
 
     private readonly IEnumerable<Type> _types = GetRequestHandlerTypes();
 
-    public ConsumerHostedService(ILogger<ConsumerHostedService> logger)
+    public ConsumerHostedService(ILogger<ConsumerHostedService> logger, IConfiguration configuration)
     {
         _logger = logger;
     }
