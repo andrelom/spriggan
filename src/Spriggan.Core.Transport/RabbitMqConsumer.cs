@@ -1,6 +1,7 @@
 using System.Text;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 
 namespace Spriggan.Core.Transport;
@@ -19,25 +20,25 @@ public class RabbitMqConsumer : IHostedService
 
     public Task StartAsync(CancellationToken cancellationToken)
     {
-        _client.AddConsumer(Consumer);
+        _client.Consumer.Received += OnReceived;
 
         return Task.CompletedTask;
     }
 
-    private void Consumer(object? model, BasicDeliverEventArgs deliver)
+    private void OnReceived(object? model, BasicDeliverEventArgs deliver)
     {
         var body = deliver.Body.ToArray();
         var message = Encoding.UTF8.GetString(body);
 
         _logger.LogInformation($"Received message: {message}");
 
-        var reply = _channel.CreateBasicProperties();
+        var reply = _client.Channel.CreateBasicProperties();
 
         reply.CorrelationId = deliver.BasicProperties.CorrelationId;
 
         var bytes = Encoding.UTF8.GetBytes(message);
 
-        _channel.BasicPublish(exchange: "", routingKey: deliver.BasicProperties.ReplyTo, basicProperties: reply, body: bytes);
+        _client.Channel.BasicPublish(exchange: "", routingKey: deliver.BasicProperties.ReplyTo, basicProperties: reply, body: bytes);
     }
 
     public Task StopAsync(CancellationToken cancellationToken)
