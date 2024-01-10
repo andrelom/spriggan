@@ -4,13 +4,13 @@ namespace Spriggan.Core.Transport;
 
 public class Bus : IBus
 {
-    private readonly ILocalBus _local;
+    private readonly IBus.ILocal _local;
 
-    private readonly IRemoteBus _remote;
+    private readonly IBus.IRemote _remote;
 
     private readonly IEnumerable<Type> _types = GetGenericTypeDefinitions();
 
-    public Bus(ILocalBus local, IRemoteBus remote)
+    public Bus(IBus.ILocal local, IBus.IRemote remote)
     {
         _local = local;
         _remote = remote;
