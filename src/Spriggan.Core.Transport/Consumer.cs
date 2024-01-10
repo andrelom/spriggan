@@ -45,6 +45,18 @@ public class Consumer : IHostedService
             var message = Encoding.UTF8.GetString(body);
 
             _logger.LogInformation($"Received message: {message}");
+
+            var reply = _channel.CreateBasicProperties();
+
+            reply.CorrelationId = deliver.BasicProperties.CorrelationId;
+
+            var bytes = Encoding.UTF8.GetBytes(message);
+
+            _channel.BasicPublish(
+                exchange: "",
+                routingKey: deliver.BasicProperties.ReplyTo,
+                basicProperties: reply,
+                body: bytes);
         };
 
         return Task.CompletedTask;
