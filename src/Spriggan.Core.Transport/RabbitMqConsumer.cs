@@ -38,7 +38,11 @@ public class RabbitMqConsumer : IHostedService
 
         var bytes = Encoding.UTF8.GetBytes(message);
 
-        _client.Channel.BasicPublish(exchange: "", routingKey: deliver.BasicProperties.ReplyTo, basicProperties: reply, body: bytes);
+        _client.Channel.BasicPublish(
+            exchange: "",
+            routingKey: deliver.BasicProperties.ReplyTo,
+            basicProperties: reply,
+            body: bytes);
     }
 
     public Task StopAsync(CancellationToken cancellationToken)
