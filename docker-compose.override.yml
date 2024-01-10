@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 
 services:
   #
@@ -46,8 +46,11 @@ services:
       - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
     labels:
       - traefik.enable=true
-      - traefik.http.routers.spriggan-pgadmin.rule=Host(`pgadmin.spriggan.localhost`)
+      # Default
+      - traefik.http.services.spriggan-pgadmin.loadbalancer.server.port=80
+      - traefik.http.routers.spriggan-pgadmin.service=spriggan-pgadmin
       - traefik.http.routers.spriggan-pgadmin.entrypoints=web
+      - traefik.http.routers.spriggan-pgadmin.rule=Host(`pgadmin.spriggan.localhost`)
     depends_on:
       - spriggan-postgres
   #
@@ -63,8 +66,11 @@ services:
       - JWT_ISSUER_KEY=${JWT_ISSUER_KEY}
     labels:
       - traefik.enable=true
-      - traefik.http.routers.spriggan-web.rule=Host(`web.spriggan.localhost`)
+      # Default
+      - traefik.http.services.spriggan-web.loadbalancer.server.port=80
+      - traefik.http.routers.spriggan-web.service=spriggan-web
       - traefik.http.routers.spriggan-web.entrypoints=web
+      - traefik.http.routers.spriggan-web.rule=Host(`web.spriggan.localhost`)
     depends_on:
       - spriggan-postgres
 
