@@ -13,6 +13,8 @@ public class Consumer : IHostedService
 
     private readonly RabbitMqOptions _options;
 
+    private readonly IEnumerable<string> _names = GetQueueNames();
+
     public Consumer(ILogger<Consumer> logger, IConfiguration configuration)
     {
         _logger = logger;
@@ -31,7 +33,7 @@ public class Consumer : IHostedService
 
     #region Private Methods
 
-    private string ToQueueName(Type type)
+    private static string ToQueueName(Type type)
     {
         var name = type.FullName;
 
@@ -43,12 +45,12 @@ public class Consumer : IHostedService
         return Regex.Replace(name, "[^a-zA-Z0-9]", string.Empty);
     }
 
-    private IEnumerable<string> GetQueueNames()
+    private static IEnumerable<string> GetQueueNames()
     {
         return GetRequestHandlerTypes().Select(ToQueueName);
     }
 
-    private IEnumerable<Type> GetRequestHandlerTypes()
+    private static IEnumerable<Type> GetRequestHandlerTypes()
     {
         var target = typeof(IRequestHandler<,>);
 
