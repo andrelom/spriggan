@@ -14,7 +14,7 @@ public class RabbitMqBus : IRabbitMqBus
 
     private readonly EventingBasicConsumer _consumer;
 
-    private readonly ConcurrentDictionary<string, TaskCompletionSource<string>> _pending = new();
+    private readonly ConcurrentDictionary<string, TaskCompletionSource<dynamic>> _pending = new();
 
     public RabbitMqBus(IRabbitMqClient client)
     {
@@ -24,38 +24,35 @@ public class RabbitMqBus : IRabbitMqBus
         _consumer.Received += (_, deliver) => HandleResponse(deliver);
     }
 
-    public async Task<TResponse> Send<TResponse>(IRequest<TResponse> request, CancellationToken cancel = default) where TResponse : class
+    public Task<TResponse> Send<TResponse>(IRequest<TResponse> request, CancellationToken cancel = default) where TResponse : class
     {
+        var id = Guid.NewGuid().ToString();
         var type = request.GetType();
 
-        var id = Guid.NewGuid().ToString();
-        var queue = _channel.QueueDeclare(type.ToQueueName("response"));
+        var queue = _channel.QueueDeclare(
+            queue: type.ToQueueName("request"),
+            durable: true,
+            exclusive: false,
+            autoDelete: false);
+
         var properties = _channel.CreateBasicProperties();
 
         properties.CorrelationId = id;
         properties.ReplyTo = queue.QueueName;
 
         var body = Encoding.UTF8.GetBytes(request.ToJson());
-        var source = new TaskCompletionSource<string>();
+        var source = new TaskCompletionSource<TResponse>();
 
-        _pending[id] = source;
+        _pending[id] = new TaskCompletionSource<dynamic>(source);
 
         _channel.BasicPublish(
             exchange: string.Empty,
-            routingKey: type.ToQueueName("request"),
+            routingKey: type.ToQueueName("response"),
             basicProperties: properties,
             body: body
         );
 
-        var json = await source.Task;
-        var response = JsonSerializer.Deserialize<TResponse>(json);
-
-        if (response == default)
-        {
-            throw new Exception();
-        }
-
-        return response;
+        return source.Task;
     }
 
     #region Private Methods
@@ -64,10 +61,11 @@ public class RabbitMqBus : IRabbitMqBus
     {
         var id = deliver.BasicProperties.CorrelationId;
         var json = Encoding.UTF8.GetString(deliver.Body.ToArray());
+        var response = JsonSerializer.Deserialize<dynamic>(json);
 
         if (_pending.TryRemove(id, out var source))
         {
-            source.SetResult(json);
+            source.SetResult(response);
         }
     }
 
