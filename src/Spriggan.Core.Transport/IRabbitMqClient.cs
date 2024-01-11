@@ -1,11 +1,8 @@
 using RabbitMQ.Client;
-using RabbitMQ.Client.Events;
 
 namespace Spriggan.Core.Transport;
 
-public interface IRabbitMqClient : IDisposable
+public interface IRabbitMqClient
 {
-    IModel Channel { get; }
-
-    EventingBasicConsumer Consumer { get; }
+    IConnection Connection { get; }
 }
