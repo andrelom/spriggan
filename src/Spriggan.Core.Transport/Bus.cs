@@ -10,17 +10,15 @@ namespace Spriggan.Core.Transport;
 
 public class Bus : IBus
 {
-    private readonly IConnection _connection;
-
-    private readonly IModel _channel;
+    private readonly IRabbitMqClient _client;
 
     private readonly ConcurrentDictionary<string, TaskCompletionSource<string>> _pending = new();
 
-    public Bus()
+    public Bus(IRabbitMqClient client)
     {
-        var consumer = new EventingBasicConsumer(_channel);
+        _client = client;
 
-        consumer.Received += (_, deliver) => HandleResponse(deliver);
+        _client.Consumer.Received += (_, deliver) => HandleResponse(deliver);
     }
 
     public async Task<TResponse> Send<TResponse>(IRequest<TResponse> request, CancellationToken cancel = default) where TResponse : class
@@ -28,8 +26,8 @@ public class Bus : IBus
         var type = request.GetType();
 
         var id = Guid.NewGuid().ToString();
-        var queue = _channel.QueueDeclare(type.ToQueueName("response"));
-        var properties = _channel.CreateBasicProperties();
+        var queue = _client.Channel.QueueDeclare(type.ToQueueName("response"));
+        var properties = _client.Channel.CreateBasicProperties();
 
         properties.CorrelationId = id;
         properties.ReplyTo = queue.QueueName;
@@ -39,7 +37,7 @@ public class Bus : IBus
 
         _pending[id] = completion;
 
-        _channel.BasicPublish(
+        _client.Channel.BasicPublish(
             exchange: string.Empty,
             routingKey: type.ToQueueName("request"),
             basicProperties: properties,
