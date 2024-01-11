@@ -32,19 +32,19 @@ public class RabbitMqBus : IRabbitMqBus
         properties.CorrelationId = id;
         properties.ReplyTo = queue.QueueName;
 
-        var message = Encoding.UTF8.GetBytes(request.ToJson());
-        var completion = new TaskCompletionSource<string>();
+        var body = Encoding.UTF8.GetBytes(request.ToJson());
+        var source = new TaskCompletionSource<string>();
 
-        _pending[id] = completion;
+        _pending[id] = source;
 
         _client.Channel.BasicPublish(
             exchange: string.Empty,
             routingKey: type.ToQueueName("request"),
             basicProperties: properties,
-            body: message
+            body: body
         );
 
-        var json = await completion.Task;
+        var json = await source.Task;
         var response = JsonSerializer.Deserialize<TResponse>(json);
 
         if (response == default)
