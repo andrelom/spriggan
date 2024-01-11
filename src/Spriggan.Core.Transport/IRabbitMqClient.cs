@@ -2,7 +2,7 @@ using RabbitMQ.Client;
 
 namespace Spriggan.Core.Transport;
 
-public interface IRabbitMqClient
+public interface IRabbitMqClient : IDisposable
 {
-    IConnection Connection { get; }
+    IModel Channel { get; }
 }
