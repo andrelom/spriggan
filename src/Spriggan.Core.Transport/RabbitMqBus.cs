@@ -63,11 +63,11 @@ public class RabbitMqBus : IRabbitMqBus
     private void HandleResponse(BasicDeliverEventArgs deliver)
     {
         var id = deliver.BasicProperties.CorrelationId;
-        var response = Encoding.UTF8.GetString(deliver.Body.ToArray());
+        var json = Encoding.UTF8.GetString(deliver.Body.ToArray());
 
         if (_pending.TryRemove(id, out var source))
         {
-            source.SetResult(response);
+            source.SetResult(json);
         }
     }
 
