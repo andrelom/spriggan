@@ -47,10 +47,27 @@ public class RabbitMqConsumer : IHostedService
 
     private void HandleRequest(BasicDeliverEventArgs deliver)
     {
-        var json = Encoding.UTF8.GetString(deliver.Body.ToArray());
-        var request = JsonSerializer.Deserialize<object>(json);
+        var id = Guid.NewGuid().ToString();
+        var name = deliver.RoutingKey.Split('#').Last();
 
-        var abc = 0;
+        var properties = _client.Channel.CreateBasicProperties();
+
+        properties.CorrelationId = id;
+        properties.ReplyTo = $"response#{name}";
+
+        var json = Encoding.UTF8.GetString(deliver.Body.ToArray());
+        var request = JsonSerializer.Deserialize<dynamic>(json);
+
+        var response = _mediator.Send(request);
+        var body = Encoding.UTF8.GetBytes(response.ToJson());
+
+        _client.Channel.BasicPublish(
+            exchange: string.Empty,
+            routingKey: $"request#{name}",
+            mandatory: true,
+            basicProperties: properties,
+            body: body
+        );
     }
 
     #endregion
