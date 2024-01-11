@@ -21,6 +21,7 @@ public static class DependencyInjectionConfiguration
         // Services
 
         services.AddSingleton<RabbitMqClient, RabbitMqClient>();
+        services.AddSingleton<IRabbitMqBus, RabbitMqBus>();
 
         services.AddTransient<IMediator, Mediator>();
         services.AddTransient<IRabbitMqClient, RabbitMqClient>();

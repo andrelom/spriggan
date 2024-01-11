@@ -8,13 +8,13 @@ using Spriggan.Core.Transport.Extensions;
 
 namespace Spriggan.Core.Transport;
 
-public class Bus : IBus
+public class RabbitMqBus : IRabbitMqBus
 {
     private readonly IRabbitMqClient _client;
 
     private readonly ConcurrentDictionary<string, TaskCompletionSource<string>> _pending = new();
 
-    public Bus(IRabbitMqClient client)
+    public RabbitMqBus(IRabbitMqClient client)
     {
         _client = client;
 
