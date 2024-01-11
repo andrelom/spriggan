@@ -29,16 +29,10 @@ public class RabbitMqBus : IRabbitMqBus
         var id = Guid.NewGuid().ToString();
         var type = request.GetType();
 
-        var queue = _client.Channel.QueueDeclare(
-            queue: type.ToQueueName("response"),
-            durable: true,
-            exclusive: false,
-            autoDelete: false);
-
         var properties = _client.Channel.CreateBasicProperties();
 
         properties.CorrelationId = id;
-        properties.ReplyTo = queue.QueueName;
+        properties.ReplyTo = type.ToQueueName("response");
 
         var body = Encoding.UTF8.GetBytes(request.ToJson());
         var source = new TaskCompletionSource<TResponse>();
