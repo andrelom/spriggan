@@ -10,7 +10,7 @@ namespace Spriggan.Core.Transport;
 
 public class RabbitMqBus : IRabbitMqBus
 {
-    private readonly IModel _channel;
+    private readonly IRabbitMqClient _client;
 
     private readonly EventingBasicConsumer _consumer;
 
@@ -18,8 +18,8 @@ public class RabbitMqBus : IRabbitMqBus
 
     public RabbitMqBus(IRabbitMqClient client)
     {
-        _channel = client.Connection.CreateModel();
-        _consumer = new EventingBasicConsumer(_channel);
+        _client = client;
+        _consumer = new EventingBasicConsumer(_client.Channel);
 
         _consumer.Received += (_, deliver) => HandleResponse(deliver);
     }
@@ -29,13 +29,13 @@ public class RabbitMqBus : IRabbitMqBus
         var id = Guid.NewGuid().ToString();
         var type = request.GetType();
 
-        var queue = _channel.QueueDeclare(
+        var queue = _client.Channel.QueueDeclare(
             queue: type.ToQueueName("response"),
             durable: true,
             exclusive: false,
             autoDelete: false);
 
-        var properties = _channel.CreateBasicProperties();
+        var properties = _client.Channel.CreateBasicProperties();
 
         properties.CorrelationId = id;
         properties.ReplyTo = queue.QueueName;
@@ -45,7 +45,7 @@ public class RabbitMqBus : IRabbitMqBus
 
         _pending[id] = new TaskCompletionSource<dynamic>(source);
 
-        _channel.BasicPublish(
+        _client.Channel.BasicPublish(
             exchange: string.Empty,
             routingKey: type.ToQueueName("request"),
             basicProperties: properties,
