@@ -30,7 +30,7 @@ public class RabbitMqBus : IRabbitMqBus
         var type = request.GetType();
 
         var queue = _channel.QueueDeclare(
-            queue: type.ToQueueName("request"),
+            queue: type.ToQueueName("response"),
             durable: true,
             exclusive: false,
             autoDelete: false);
@@ -47,7 +47,7 @@ public class RabbitMqBus : IRabbitMqBus
 
         _channel.BasicPublish(
             exchange: string.Empty,
-            routingKey: type.ToQueueName("response"),
+            routingKey: type.ToQueueName("request"),
             basicProperties: properties,
             body: body
         );
