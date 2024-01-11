@@ -50,6 +50,7 @@ public class RabbitMqBus : IRabbitMqBus
         _client.Channel.BasicPublish(
             exchange: string.Empty,
             routingKey: type.ToQueueName("request"),
+            mandatory: true,
             basicProperties: properties,
             body: body
         );
