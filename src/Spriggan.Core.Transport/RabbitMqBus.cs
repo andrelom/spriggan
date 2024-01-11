@@ -12,16 +12,24 @@ public class RabbitMqBus : IRabbitMqBus
 {
     private readonly IRabbitMqClient _client;
 
-    private readonly EventingBasicConsumer _consumer;
-
     private readonly ConcurrentDictionary<string, TaskCompletionSource<dynamic>> _pending = new();
 
     public RabbitMqBus(IRabbitMqClient client)
     {
         _client = client;
-        _consumer = new EventingBasicConsumer(_client.Channel);
 
-        _consumer.Received += (_, deliver) => HandleResponse(deliver);
+        var consumer = new EventingBasicConsumer(_client.Channel);
+
+        foreach (var name in _client.ResponseQueues)
+        {
+            _client.Channel.BasicConsume(
+                consumer: consumer,
+                queue: name,
+                autoAck: true
+            );
+        }
+
+        consumer.Received += (_, deliver) => HandleResponse(deliver);
     }
 
     public Task<TResponse> Send<TResponse>(IRequest<TResponse> request, CancellationToken cancel = default) where TResponse : class

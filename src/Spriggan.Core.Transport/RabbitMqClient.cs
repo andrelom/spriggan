@@ -26,11 +26,15 @@ public class RabbitMqClient : IRabbitMqClient
         _connection = factory.CreateConnection();
         _channel = _connection.CreateModel();
 
-        DeclareQueues("request");
-        DeclareQueues("response");
+        RequestQueues = DeclareQueues("request");
+        ResponseQueues = DeclareQueues("response");
     }
 
     public IModel Channel => _channel;
+
+    public IEnumerable<string> RequestQueues { get; }
+
+    public IEnumerable<string> ResponseQueues { get; }
 
     public void Dispose()
     {
@@ -50,9 +54,9 @@ public class RabbitMqClient : IRabbitMqClient
         });
     }
 
-    private void DeclareQueues(string prefix)
+    private IEnumerable<string> DeclareQueues(string prefix)
     {
-        var names = GetRequestTypes().Select(type => type.ToQueueName(prefix));
+        var names = GetRequestTypes().Select(type => type.ToQueueName(prefix)).ToArray();
 
         foreach (var name in names)
         {
@@ -62,6 +66,8 @@ public class RabbitMqClient : IRabbitMqClient
                 exclusive: false,
                 autoDelete: false);
         }
+
+        return names;
     }
 
     #endregion

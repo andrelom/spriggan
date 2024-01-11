@@ -1,6 +1,7 @@
 using System.Text;
 using System.Text.Json;
 using Microsoft.Extensions.Hosting;
+using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 
 namespace Spriggan.Core.Transport;
@@ -11,18 +12,26 @@ public class RabbitMqConsumer : IHostedService
 
     private readonly IRabbitMqClient _client;
 
-    private readonly EventingBasicConsumer _consumer;
-
     public RabbitMqConsumer(IMediator mediator, IRabbitMqClient client)
     {
         _mediator = mediator;
         _client = client;
-        _consumer = new EventingBasicConsumer(client.Channel);
     }
 
     public Task StartAsync(CancellationToken cancellationToken)
     {
-        _consumer.Received += (_, deliver) => HandleRequest(deliver);
+        var consumer = new EventingBasicConsumer(_client.Channel);
+
+        foreach (var name in _client.RequestQueues)
+        {
+            _client.Channel.BasicConsume(
+                consumer: consumer,
+                queue: name,
+                autoAck: true
+            );
+        }
+
+        consumer.Received += (_, deliver) => HandleRequest(deliver);
 
         return Task.CompletedTask;
     }
