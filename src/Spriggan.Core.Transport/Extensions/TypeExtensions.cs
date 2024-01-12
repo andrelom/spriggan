@@ -4,7 +4,7 @@ public static class TypeExtensions
 {
     internal static string ToQueueName(this Type type, string group)
     {
-        var name = type.FullName;
+        var name = type.AssemblyQualifiedName;
 
         if (string.IsNullOrWhiteSpace(name))
         {
