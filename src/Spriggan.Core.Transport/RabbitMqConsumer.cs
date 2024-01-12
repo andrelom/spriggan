@@ -1,8 +1,10 @@
+using System.ComponentModel;
 using System.Text;
 using System.Text.Json;
 using Microsoft.Extensions.Hosting;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
+using Spriggan.Core.Extensions;
 
 namespace Spriggan.Core.Transport;
 
@@ -31,7 +33,7 @@ public class RabbitMqConsumer : IHostedService
             );
         }
 
-        consumer.Received += (_, deliver) => HandleRequest(deliver);
+        consumer.Received += async (_, deliver) => await HandleRequest(deliver);
 
         return Task.CompletedTask;
     }
@@ -45,7 +47,7 @@ public class RabbitMqConsumer : IHostedService
 
     #region Private Methods
 
-    private void HandleRequest(BasicDeliverEventArgs deliver)
+    private async Task HandleRequest(BasicDeliverEventArgs deliver)
     {
         var id = Guid.NewGuid().ToString();
         var name = deliver.RoutingKey.Split('#').Last();
@@ -55,10 +57,15 @@ public class RabbitMqConsumer : IHostedService
         properties.CorrelationId = id;
         properties.ReplyTo = $"response#{name}";
 
+        var type = Type.GetType(name);
         var json = Encoding.UTF8.GetString(deliver.Body.ToArray());
-        var request = JsonSerializer.Deserialize<dynamic>(json);
 
-        var response = _mediator.Send(request);
+        dynamic request = JsonSerializer.Deserialize(json, type, new JsonSerializerOptions
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+        });
+
+        var response = await _mediator.Send(request);
         var body = Encoding.UTF8.GetBytes(response.ToJson());
 
         _client.Channel.BasicPublish(
