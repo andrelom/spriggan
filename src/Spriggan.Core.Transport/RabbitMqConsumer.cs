@@ -12,14 +12,15 @@ public class RabbitMqConsumer : IHostedService
         _bus = RabbitHutch.CreateBus("host=localhost");
     }
 
-    public Task StartAsync(CancellationToken cancellationToken)
+    public async Task StartAsync(CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        await HandleRequests();
+        await HandleSubscribers();
     }
 
     public Task StopAsync(CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        return Task.CompletedTask;
     }
 
     #region Private Methods
@@ -49,7 +50,7 @@ public class RabbitMqConsumer : IHostedService
 
     private Task HandleSubscribers()
     {
-        throw new NotImplementedException();
+        return Task.CompletedTask;
     }
 
     #endregion
