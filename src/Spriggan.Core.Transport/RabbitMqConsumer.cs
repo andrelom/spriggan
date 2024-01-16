@@ -24,9 +24,27 @@ public class RabbitMqConsumer : IHostedService
 
     #region Private Methods
 
-    private Task HandleRequests()
+    private static IEnumerable<Type> GetRequestTypes()
     {
-        throw new NotImplementedException();
+        var target = typeof(IRequest<>);
+
+        return Dependencies.Domain.Where(type =>
+        {
+            return type.GetInterfaces().Any(source => source.IsGenericType && source.GetGenericTypeDefinition() == target);
+        });
+    }
+
+    private async Task HandleRequests()
+    {
+        var types = GetRequestTypes();
+        var method = _bus.PubSub.GetType().GetMethod(nameof(_bus.PubSub.SubscribeAsync));
+
+        if (method == null) return;
+
+        foreach (var type in types)
+        {
+            var generic = method.MakeGenericMethod(type);
+        }
     }
 
     private Task HandleSubscribers()
