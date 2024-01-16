@@ -21,6 +21,7 @@ public static class DependencyInjectionConfiguration
         // Services
 
         services.AddTransient<IMediator, Mediator>();
+        services.AddTransient<IBus, RabbitMqBus>();
 
         return services;
     }
