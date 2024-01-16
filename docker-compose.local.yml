@@ -19,6 +19,25 @@ services:
       - --providers.docker.exposedbydefault=false
       - --entrypoints.web.address=:80
   #
+  # RabbitMQ
+  spriggan-rabbitmq:
+    image: "rabbitmq:3-management-alpine"
+    container_name: spriggan-rabbitmq
+    ports:
+      - 5672:5672
+    networks:
+      - spriggan
+    environment:
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}
+    labels:
+      - traefik.enable=true
+      # Default
+      - traefik.http.services.spriggan-rabbitmq.loadbalancer.server.port=15672
+      - traefik.http.routers.spriggan-rabbitmq.service=spriggan-rabbitmq
+      - traefik.http.routers.spriggan-rabbitmq.entrypoints=web
+      - traefik.http.routers.spriggan-rabbitmq.rule=Host(`rabbitmq.spriggan.localhost`)
+  #
   # PostgreSQL
   spriggan-postgres:
     image: postgres
