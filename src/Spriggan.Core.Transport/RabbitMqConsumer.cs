@@ -41,14 +41,13 @@ public class RabbitMqConsumer : IHostedService
     {
         var source = _bus.PubSub.GetType().GetMethod(nameof(_bus.PubSub.SubscribeAsync));
 
-        if (source == null)
-        {
-            throw new Exception();
-        }
+        if (source == null) throw new Exception();
 
         foreach (var type in Requests)
         {
             var method = source.MakeGenericMethod(type);
+
+            if (method == null) throw new Exception();
         }
 
         return Task.CompletedTask;
