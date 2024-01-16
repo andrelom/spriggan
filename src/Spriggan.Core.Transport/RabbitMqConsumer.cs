@@ -8,9 +8,10 @@ public class RabbitMqConsumer : IHostedService
 
     private static readonly IEnumerable<Type> Notifications = GetGenericTypes(typeof(INotification));
 
-    public Task StartAsync(CancellationToken cancellationToken)
+    public async Task StartAsync(CancellationToken cancellationToken)
     {
-        return Task.CompletedTask;
+        await BindRequestHandlers();
+        await BindNotificationHandlers();
     }
 
     public Task StopAsync(CancellationToken cancellationToken)
@@ -26,6 +27,16 @@ public class RabbitMqConsumer : IHostedService
         {
             return type.GetInterfaces().Any(source => source.IsGenericType && source.GetGenericTypeDefinition() == target);
         });
+    }
+
+    private Task BindRequestHandlers()
+    {
+        return Task.CompletedTask;
+    }
+
+    private Task BindNotificationHandlers()
+    {
+        return Task.CompletedTask;
     }
 
     #endregion
