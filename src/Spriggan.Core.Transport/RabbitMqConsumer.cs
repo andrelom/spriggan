@@ -14,8 +14,8 @@ public class RabbitMqConsumer : IHostedService
 
     public async Task StartAsync(CancellationToken cancellationToken)
     {
-        await HandleRequests();
-        await HandleSubscribers();
+        await BindRequestHandlers();
+        await BindSubscribeHandlers();
     }
 
     public Task StopAsync(CancellationToken cancellationToken)
@@ -35,20 +35,28 @@ public class RabbitMqConsumer : IHostedService
         });
     }
 
-    private async Task HandleRequests()
+    private async Task BindRequestHandlers()
     {
         var types = GetRequestTypes();
-        var method = _bus.PubSub.GetType().GetMethod(nameof(_bus.PubSub.SubscribeAsync));
+        var source = _bus.PubSub.GetType().GetMethod(nameof(_bus.PubSub.SubscribeAsync));
 
-        if (method == null) return;
+        if (source == null) return;
 
         foreach (var type in types)
         {
-            var generic = method.MakeGenericMethod(type);
+            var method = source.MakeGenericMethod(type);
+            var action = typeof(Action<>).MakeGenericType(type);
+
+            var activator = Activator.CreateInstance(action, new Action<object>(response =>
+            {
+                Console.WriteLine(response);
+            }));
+
+            method.Invoke(_bus.PubSub, new[] { "id", activator });
         }
     }
 
-    private Task HandleSubscribers()
+    private Task BindSubscribeHandlers()
     {
         return Task.CompletedTask;
     }
