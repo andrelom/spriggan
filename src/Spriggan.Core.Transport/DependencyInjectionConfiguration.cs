@@ -23,6 +23,11 @@ public static class DependencyInjectionConfiguration
         services.AddTransient<IMediator, Mediator>();
         services.AddTransient<IBus, RabbitMqBus>();
 
+        //
+        // Hosted Services
+
+        services.AddHostedService<RabbitMqConsumer>();
+
         return services;
     }
 
