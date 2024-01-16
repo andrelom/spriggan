@@ -52,6 +52,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spriggan.Module.Main.Contra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spriggan.Module.Main", "src\Spriggan.Module.Main\Spriggan.Module.Main.csproj", "{62817AC4-AB1C-4292-8FAD-D1D52224ED94}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spriggan.Core.Transport.RabbitMq", "src\Spriggan.Core.Transport.RabbitMq\Spriggan.Core.Transport.RabbitMq.csproj", "{619FA364-BBD8-4D56-8962-211D7FFB24C6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,6 +83,7 @@ Global
 		{04B3AFC4-1192-4E16-A308-6A4140F9E11C} = {7EE6C50A-5F58-4C26-8843-985CF1E50A83}
 		{4A548B99-773E-4791-9551-20DD4331DC80} = {04B3AFC4-1192-4E16-A308-6A4140F9E11C}
 		{62817AC4-AB1C-4292-8FAD-D1D52224ED94} = {04B3AFC4-1192-4E16-A308-6A4140F9E11C}
+		{619FA364-BBD8-4D56-8962-211D7FFB24C6} = {62155A97-2E41-4EB4-B92A-07CCE61400F2}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{D050F364-352E-4C71-AA60-70997BF7C16F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -147,5 +150,9 @@ Global
 		{62817AC4-AB1C-4292-8FAD-D1D52224ED94}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{62817AC4-AB1C-4292-8FAD-D1D52224ED94}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{62817AC4-AB1C-4292-8FAD-D1D52224ED94}.Release|Any CPU.Build.0 = Release|Any CPU
+		{619FA364-BBD8-4D56-8962-211D7FFB24C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{619FA364-BBD8-4D56-8962-211D7FFB24C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{619FA364-BBD8-4D56-8962-211D7FFB24C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{619FA364-BBD8-4D56-8962-211D7FFB24C6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
