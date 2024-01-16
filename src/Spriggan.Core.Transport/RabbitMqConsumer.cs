@@ -4,9 +4,9 @@ namespace Spriggan.Core.Transport;
 
 public class RabbitMqConsumer : IHostedService
 {
-    private static readonly IEnumerable<Type> Requests = GetRequestTypes();
+    private static readonly IEnumerable<Type> Requests = GetGenericTypes(typeof(IRequest<>));
 
-    private static readonly IEnumerable<Type> Notifications = GetNotificationTypes();
+    private static readonly IEnumerable<Type> Notifications = GetGenericTypes(typeof(INotification));
 
     public Task StartAsync(CancellationToken cancellationToken)
     {
@@ -20,20 +20,8 @@ public class RabbitMqConsumer : IHostedService
 
     #region Private Methods
 
-    private static IEnumerable<Type> GetRequestTypes()
+    private static IEnumerable<Type> GetGenericTypes(Type target)
     {
-        var target = typeof(IRequest<>);
-
-        return Dependencies.Domain.Where(type =>
-        {
-            return type.GetInterfaces().Any(source => source.IsGenericType && source.GetGenericTypeDefinition() == target);
-        });
-    }
-
-    private static IEnumerable<Type> GetNotificationTypes()
-    {
-        var target = typeof(INotification);
-
         return Dependencies.Domain.Where(type =>
         {
             return type.GetInterfaces().Any(source => source.IsGenericType && source.GetGenericTypeDefinition() == target);
