@@ -1,3 +1,4 @@
+using System.Data;
 using EasyNetQ;
 using Microsoft.Extensions.Hosting;
 
@@ -38,13 +39,13 @@ public class RabbitMqConsumer : IHostedService
 
         return requests.Select((request) =>
         {
-            var generic = request.GetInterfaces().FirstOrDefault(item => item.IsGenericType && item.GetGenericTypeDefinition() == typeof(IRequest<>));
+            var generic = request.GetInterfaces().FirstOrDefault(item => item.IsGenericType && item.GetGenericTypeDefinition() == target);
 
-            if (generic == null) throw new Exception();
+            if (generic == null) throw new NoNullAllowedException();
 
             var response = generic.GetGenericArguments().First();
 
-            if (response == null) throw new Exception();
+            if (response == null) throw new NoNullAllowedException();
 
             return new KeyValuePair<Type, Type>(request, response);
         });
@@ -54,13 +55,19 @@ public class RabbitMqConsumer : IHostedService
     {
         var source = _bus.Rpc.GetType().GetMethod(nameof(_bus.Rpc.RequestAsync));
 
-        if (source == null) throw new Exception();
+        if (source == null) throw new NoNullAllowedException();
 
         foreach (var kvp in Requests)
         {
             var method = source.MakeGenericMethod(kvp.Key, kvp.Value);
 
-            if (method == null) throw new Exception();
+            if (method == null) throw new NoNullAllowedException();
+
+            var action = new Action<dynamic>((message) => { });
+
+            var task = method.Invoke(_bus.Rpc, new object[] { action, null, null }) as Task;
+
+            if (task == null) throw new NoNullAllowedException();
         }
 
         return Task.CompletedTask;
