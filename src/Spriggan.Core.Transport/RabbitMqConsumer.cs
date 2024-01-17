@@ -7,9 +7,7 @@ public class RabbitMqConsumer : IHostedService
 {
     private readonly EasyNetQ.IBus _bus;
 
-    private static readonly IEnumerable<Type> Requests = GetGenericTypes(typeof(IRequest<>));
-
-    private static readonly IEnumerable<Type> Notifications = GetGenericTypes(typeof(INotification));
+    private static readonly IEnumerable<KeyValuePair<Type, Type>> Requests = GetRequestTypes();
 
     public RabbitMqConsumer()
     {
@@ -29,23 +27,38 @@ public class RabbitMqConsumer : IHostedService
 
     #region Private Methods
 
-    private static IEnumerable<Type> GetGenericTypes(Type target)
+    private static IEnumerable<KeyValuePair<Type, Type>> GetRequestTypes()
     {
-        return Dependencies.Domain.Where(type =>
+        var target = typeof(IRequest<>);
+
+        var requests = Dependencies.Domain.Where(type =>
         {
             return type.GetInterfaces().Any(source => source.IsGenericType && source.GetGenericTypeDefinition() == target);
+        });
+
+        return requests.Select((request) =>
+        {
+            var generic = request.GetInterfaces().FirstOrDefault(item => item.IsGenericType && item.GetGenericTypeDefinition() == typeof(IRequest<>));
+
+            if (generic == null) throw new Exception();
+
+            var response = generic.GetGenericArguments().First();
+
+            if (response == null) throw new Exception();
+
+            return new KeyValuePair<Type, Type>(request, response);
         });
     }
 
     private Task BindRequestHandlers()
     {
-        var source = _bus.PubSub.GetType().GetMethod(nameof(_bus.PubSub.SubscribeAsync));
+        var source = _bus.Rpc.GetType().GetMethod(nameof(_bus.Rpc.RequestAsync));
 
         if (source == null) throw new Exception();
 
-        foreach (var type in Requests)
+        foreach (var kvp in Requests)
         {
-            var method = source.MakeGenericMethod(type);
+            var method = source.MakeGenericMethod(kvp.Key, kvp.Value);
 
             if (method == null) throw new Exception();
         }
