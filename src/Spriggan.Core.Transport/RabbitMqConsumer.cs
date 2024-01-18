@@ -1,4 +1,5 @@
 using System.Data;
+using System.Reflection;
 using EasyNetQ;
 using Microsoft.Extensions.Hosting;
 
@@ -53,7 +54,7 @@ public class RabbitMqConsumer : IHostedService
 
     private Task BindRequestHandlers()
     {
-        var source = _bus.Rpc.GetType().GetMethod(nameof(_bus.Rpc.RequestAsync));
+        var source = _bus.Rpc.GetType().GetMethod(nameof(_bus.Rpc.RespondAsync));
 
         if (source == null) throw new NoNullAllowedException();
 
@@ -63,11 +64,17 @@ public class RabbitMqConsumer : IHostedService
 
             if (method == null) throw new NoNullAllowedException();
 
-            var action = new Action<dynamic>((message) => { });
+            var genericMethod = GetType()
+                .GetMethod(nameof(CreateResponder), BindingFlags.Instance | BindingFlags.NonPublic)
+                ?.MakeGenericMethod(kvp.Key, kvp.Value);
 
-            var task = method.Invoke(_bus.Rpc, new object[] { action, null, null }) as Task;
+            if (genericMethod == null) throw new NoNullAllowedException();
 
-            if (task == null) throw new NoNullAllowedException();
+            var responder = genericMethod.Invoke(this, null);
+
+            Action<IResponderConfiguration> configure = configuration => { };
+
+            var task = method.Invoke(_bus.Rpc, new object[] { responder, configure, null });
         }
 
         return Task.CompletedTask;
@@ -76,6 +83,18 @@ public class RabbitMqConsumer : IHostedService
     private Task BindNotificationHandlers()
     {
         return Task.CompletedTask;
+    }
+
+    // Define a generic method that matches the signature of RespondAsync
+    private Func<TRequest, CancellationToken, Task<TResponse>> CreateResponder<TRequest, TResponse>()
+    {
+        return (request, cancellationToken) => Task.FromResult(HandleRequest<TRequest, TResponse>(request));
+    }
+
+    private TResponse HandleRequest<TRequest, TResponse>(TRequest request)
+    {
+        // Your implementation for handling the request
+        return default;
     }
 
     #endregion
