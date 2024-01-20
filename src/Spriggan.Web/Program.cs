@@ -1,38 +1,58 @@
-using Microsoft.AspNetCore.Server.Kestrel.Core;
+using FastEndpoints;
 using Spriggan.Core;
 
 namespace Spriggan.Web;
 
 public static class Program
 {
-    public static void Main(string[] args)
+    public static void Main(string[] arguments)
     {
-        CreateHostBuilder(args).Build().Run();
+        var app = CreateHostBuilder(arguments).Build();
+
+        UseApplication(app);
+
+        app.Run();
     }
 
     // Please do not change this method accessor (private, etc) as the Entity Framework
     // calls it when we are working with migrations.
-    public static IHostBuilder CreateHostBuilder(string[] args)
+    public static WebApplicationBuilder CreateHostBuilder(string[] arguments)
     {
         Development.ReadEnvironmentVariables();
 
         Dependencies.Initialize("Spriggan");
 
-        return Host.CreateDefaultBuilder(args).ConfigureWebHostDefaults(ConfigureWebHostDefaults);
+        var builder = WebApplication.CreateBuilder(arguments);
+
+        SetServices(builder.Services, builder.Configuration);
+
+        return builder;
     }
 
     #region Private Methods
 
-    private static void ConfigureWebHostDefaults(IWebHostBuilder builder)
+    private static void SetServices(IServiceCollection services, IConfiguration configuration)
     {
-        builder.ConfigureKestrel(ConfigureKestrel);
+        //
+        // Libraries
 
-        builder.UseStartup<Startup>();
+        // DI from "FastEndpoints".
+
+        services.AddFastEndpoints();
+
+        //
+        // Core
+
+        services
+            .AddCore()
+            .AddCoreDataProtection(configuration);
     }
 
-    private static void ConfigureKestrel(KestrelServerOptions options)
+    // Be aware that any change in method call order can result in unexpected behavior.
+    private static void UseApplication(WebApplication app)
     {
-        options.AddServerHeader = false;
+        // Step: 01
+        app.UseFastEndpoints();
     }
 
     #endregion

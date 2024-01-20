@@ -7,6 +7,8 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="FastEndpoints" Version="5.21.2" />
+      <PackageReference Include="FastEndpoints.Swagger" Version="5.21.2" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0">
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -14,16 +16,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Spriggan.Core.Transport\Spriggan.Core.Transport.csproj" />
-      <ProjectReference Include="..\Spriggan.Core.Web\Spriggan.Core.Web.csproj" />
       <ProjectReference Include="..\Spriggan.Core\Spriggan.Core.csproj" />
-      <ProjectReference Include="..\Spriggan.Data.Identity\Spriggan.Data.Identity.csproj" />
-      <ProjectReference Include="..\Spriggan.Data.Main\Spriggan.Data.Main.csproj" />
-      <ProjectReference Include="..\Spriggan.Foundation.Caching\Spriggan.Foundation.Caching.csproj" />
-      <ProjectReference Include="..\Spriggan.Foundation.Identity\Spriggan.Foundation.Identity.csproj" />
-      <ProjectReference Include="..\Spriggan.Foundation.Mail\Spriggan.Foundation.Mail.csproj" />
-      <ProjectReference Include="..\Spriggan.Module.Identity\Spriggan.Module.Identity.csproj" />
-      <ProjectReference Include="..\Spriggan.Module.Main\Spriggan.Module.Main.csproj" />
     </ItemGroup>
 
 </Project>
