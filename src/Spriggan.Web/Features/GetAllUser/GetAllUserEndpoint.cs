@@ -1,8 +1,9 @@
 using FastEndpoints;
+using Spriggan.Core;
 
 namespace Spriggan.Web.Features.GetAllUser;
 
-public class GetAllUserEndpoint : Endpoint<GetAllUserRequest, GetAllUserResponse>
+public class GetAllUserEndpoint : Endpoint<GetAllUserRequest, Result<GetAllUserResponse>>
 {
     public override void Configure()
     {
@@ -13,7 +14,7 @@ public class GetAllUserEndpoint : Endpoint<GetAllUserRequest, GetAllUserResponse
 
     public override async Task HandleAsync(GetAllUserRequest request, CancellationToken token)
     {
-        var response = new GetAllUserResponse();
+        var response = new Result<GetAllUserResponse>();
 
         await SendAsync(response, cancellation: token);
     }
