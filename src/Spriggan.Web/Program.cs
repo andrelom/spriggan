@@ -7,11 +7,12 @@ public static class Program
 {
     public static void Main(string[] arguments)
     {
-        var app = CreateHostBuilder(arguments).Build();
+        var builder = CreateHostBuilder(arguments);
+        var host = builder.Build();
 
-        UseApplication(app);
+        ConfigureHost(host);
 
-        app.Run();
+        host.Run();
     }
 
     // Please do not change this method accessor (private, etc) as the Entity Framework
@@ -24,14 +25,14 @@ public static class Program
 
         var builder = WebApplication.CreateBuilder(arguments);
 
-        SetServices(builder.Services, builder.Configuration);
+        ConfigureServices(builder.Services, builder.Configuration);
 
         return builder;
     }
 
     #region Private Methods
 
-    private static void SetServices(IServiceCollection services, IConfiguration configuration)
+    private static void ConfigureServices(IServiceCollection services, IConfiguration configuration)
     {
         //
         // Libraries
@@ -49,7 +50,7 @@ public static class Program
     }
 
     // Be aware that any change in method call order can result in unexpected behavior.
-    private static void UseApplication(WebApplication app)
+    private static void ConfigureHost(WebApplication app)
     {
         // Step: 01
         app.UseFastEndpoints();
