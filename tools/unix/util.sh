@@ -5,6 +5,7 @@ function set_environment_variables {
 
   if [ ! -f "$file" ]; then
     echo "Could not open $file"
+
     exit 1
   fi
 
@@ -17,10 +18,12 @@ function set_environment_variables {
 
     if [[ -n "$line" ]]; then
       line="${line//\"/}"
+
       IFS='=' read -r key value <<<"$line"
 
       if [ -n "$key" ] && [ -n "$value" ]; then
         echo "Setting value $value for key $key"
+
         export "$key=$value"
       fi
     fi
