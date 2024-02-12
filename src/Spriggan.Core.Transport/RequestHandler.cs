@@ -5,7 +5,7 @@ namespace Spriggan.Core.Transport;
 public abstract class RequestHandler<TRequest, TResponse> :
     IConsumer<TRequest>
     where TRequest : class, IRequest<TResponse>
-    where TResponse : class, IResult, new()
+    where TResponse : class, IResult
 {
     protected abstract Task<TResponse> Handle(TRequest request);
 
