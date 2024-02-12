@@ -48,9 +48,7 @@ public abstract class Consumer<TRequest, TResponse> :
 
     private TResponse? HandleValidation(TRequest request)
     {
-        if (_validators == null) return null;
-
-        if (!_validators.Any()) return null;
+        if (_validators == null || !_validators.Any()) return null;
 
         var context = new ValidationContext<TRequest>(request);
 
