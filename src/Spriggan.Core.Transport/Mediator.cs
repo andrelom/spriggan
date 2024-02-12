@@ -9,7 +9,7 @@ internal class Mediator : IMediator
         _mediator = mediator;
     }
 
-    public async Task<TResponse> Send<TResponse>(IRequest<TResponse> request, CancellationToken cancel = default) where TResponse : class
+    public async Task<TResponse> Send<TResponse>(IRequest<TResponse> request, CancellationToken cancel = default) where TResponse : IResult
     {
         return await _mediator.Send(request, cancel);
     }
