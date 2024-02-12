@@ -1,3 +1,5 @@
+using System.Collections.Immutable;
+using FluentValidation;
 using MassTransit;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -11,16 +13,24 @@ public abstract class Consumer<TRequest, TResponse> :
 {
     private readonly ILogger<Consumer<TRequest, TResponse>>? _logger;
 
+    private readonly IEnumerable<IValidator>? _validators;
+
     protected Consumer(IServiceProvider services)
     {
         _logger = services.GetService<ILogger<Consumer<TRequest, TResponse>>>();
+        _validators = services.GetService<IEnumerable<IValidator<TRequest>>>();
     }
 
     protected abstract Task<TResponse> Handle(TRequest request);
 
     public async Task Consume(ConsumeContext<TRequest> context)
     {
-        TResponse? response;
+        if (HandleValidation(context.Message) is { } response)
+        {
+            await context.RespondAsync(response);
+
+            return;
+        }
 
         try
         {
@@ -35,6 +45,46 @@ public abstract class Consumer<TRequest, TResponse> :
     }
 
     #region Private Methods
+
+    private ImmutableArray<string>? GetValidationMessages(TRequest request)
+    {
+        var context = new ValidationContext<TRequest>(request);
+
+        return _validators?
+            .Select(validator => validator.Validate(context))
+            .SelectMany(result => result.Errors)
+            .Where(failure => failure != null)
+            .Select(failure => failure.ErrorMessage)
+            .ToImmutableArray();
+    }
+
+    private TResponse? HandleValidation(TRequest request)
+    {
+        if (_validators == null) return null;
+
+        if (!_validators.Any()) return null;
+
+        var context = new ValidationContext<TRequest>(request);
+
+        var messages = _validators
+            .Select(validator => validator.Validate(context))
+            .SelectMany(result => result.Errors)
+            .Where(failure => failure != null)
+            .Select(failure => failure.ErrorMessage)
+            .ToImmutableArray();
+
+        if (!messages.Any()) return null;
+
+        return new TResponse
+        {
+            Ok = false,
+            Error = Errors.Validation,
+            Metadata = new Dictionary<string, object>
+            {
+                { "Validations", messages },
+            }
+        };
+    }
 
     private TResponse HandleException(Exception ex)
     {
