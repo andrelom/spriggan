@@ -20,18 +20,18 @@ public abstract class Consumer<TRequest, TResponse> :
 
     public async Task Consume(ConsumeContext<TRequest> context)
     {
+        TResponse? response;
+
         try
         {
-            var response = await Handle(context.Message);
-
-            await context.RespondAsync(response);
+            response = await Handle(context.Message);
         }
         catch (Exception ex)
         {
-            var response = HandleException(ex);
-
-            await context.RespondAsync(response);
+            response = HandleException(ex);
         }
+
+        await context.RespondAsync(response);
     }
 
     #region Private Methods
