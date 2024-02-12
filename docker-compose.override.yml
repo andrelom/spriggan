@@ -19,6 +19,18 @@ services:
       - --providers.docker.exposedbydefault=false
       - --entrypoints.web.address=:80
   #
+  # RabbitMQ
+  spriggan-rabbitmq:
+    image: "rabbitmq:latest"
+    container_name: spriggan-rabbitmq
+    ports:
+      - 5672:5672
+    networks:
+      - spriggan
+    environment:
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}
+  #
   # PostgreSQL
   spriggan-postgres:
     image: postgres
@@ -51,26 +63,6 @@ services:
       - traefik.http.routers.spriggan-pgadmin.service=spriggan-pgadmin
       - traefik.http.routers.spriggan-pgadmin.entrypoints=web
       - traefik.http.routers.spriggan-pgadmin.rule=Host(`pgadmin.spriggan.localhost`)
-    depends_on:
-      - spriggan-postgres
-  #
-  # Spriggan.Web
-  spriggan-web:
-    restart: always
-    networks:
-      - spriggan
-    environment:
-      - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT}
-      - PROTECTION_KEYS_PATH=${PROTECTION_KEYS_PATH}
-      - SEND_GRID_API_KEY=${SEND_GRID_API_KEY}
-      - JWT_ISSUER_KEY=${JWT_ISSUER_KEY}
-    labels:
-      - traefik.enable=true
-      # Default
-      - traefik.http.services.spriggan-web.loadbalancer.server.port=80
-      - traefik.http.routers.spriggan-web.service=spriggan-web
-      - traefik.http.routers.spriggan-web.entrypoints=web
-      - traefik.http.routers.spriggan-web.rule=Host(`web.spriggan.localhost`)
     depends_on:
       - spriggan-postgres
 
