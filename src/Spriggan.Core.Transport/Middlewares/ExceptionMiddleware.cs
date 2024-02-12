@@ -32,7 +32,7 @@ public class ExceptionMiddleware<TRequest, TResponse> :
     {
         var id = Guid.NewGuid();
 
-        _logger.LogError(ex, "Transport Exception Behavior ({0})", id);
+        _logger.LogError(ex, "Transport Exception Middleware ({0})", id);
 
         return Task.FromResult(new TResponse
         {
