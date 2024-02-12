@@ -20,8 +20,8 @@ public class Bus : IBus
         TRequest message,
         CancellationToken token = default,
         RequestTimeout timeout = default)
-        where TRequest : class
-        where TResponse : class, IResult, new()
+        where TRequest : class, IRequest<TResponse>
+        where TResponse : class, IResult
     {
         Response<TResponse> response;
 
