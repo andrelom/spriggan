@@ -25,9 +25,9 @@ public class Bus : IBus
     {
         Response<TResponse> response;
 
-        var isLocalRequest = _types.Any(type => type == typeof(IConsumer<TRequest>));
+        var isLocal = _types.Any(type => type == typeof(IConsumer<TRequest>));
 
-        if (isLocalRequest)
+        if (isLocal)
         {
             response = await _local.Request<TRequest, TResponse>(message, token, timeout);
         }
