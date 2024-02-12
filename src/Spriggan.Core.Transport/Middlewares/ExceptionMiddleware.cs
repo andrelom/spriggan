@@ -2,7 +2,8 @@ using Microsoft.Extensions.Logging;
 
 namespace Spriggan.Core.Transport.Middlewares;
 
-public class ExceptionMiddleware<TRequest, TResponse>: IMiddleware<TRequest, TResponse>
+public class ExceptionMiddleware<TRequest, TResponse>:
+    IMiddleware<TRequest, TResponse>
     where TRequest : class, IRequest<TResponse>
     where TResponse : class, IResult, new()
 {
