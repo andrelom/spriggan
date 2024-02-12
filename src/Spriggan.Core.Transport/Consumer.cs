@@ -40,7 +40,7 @@ public abstract class Consumer<TRequest, TResponse> :
     {
         var id = Guid.NewGuid();
 
-        _logger?.LogError(ex, "Transport Exception Middleware ({0})", id);
+        _logger?.LogError(ex, "Transport Consumer Exception ({0})", id);
 
         return new TResponse
         {
