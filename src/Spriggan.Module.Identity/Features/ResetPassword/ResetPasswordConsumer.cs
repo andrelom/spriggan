@@ -13,7 +13,7 @@ public class ResetPasswordConsumer : Consumer<ResetPasswordRequest, Result<Reset
 
     public ResetPasswordConsumer(
         UserManager<User> userManager,
-        IServiceProvider services) : base(services)
+        IServiceProvider serviceProvider) : base(serviceProvider)
     {
         _userManager = userManager;
     }

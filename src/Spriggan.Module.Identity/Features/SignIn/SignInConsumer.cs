@@ -18,7 +18,7 @@ public class SignInConsumer : Consumer<SignInRequest, Result<SignInResponse>>
     public SignInConsumer(
         UserManager<User> userManager,
         ISecurityTokenProvider securityTokenProvider,
-        IServiceProvider services) : base(services)
+        IServiceProvider serviceProvider) : base(serviceProvider)
     {
         _userManager = userManager;
         _securityTokenProvider = securityTokenProvider;

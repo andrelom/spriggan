@@ -13,7 +13,7 @@ public class SendResetPasswordTokenConsumer : Consumer<SendResetPasswordTokenReq
 
     public SendResetPasswordTokenConsumer(
         UserManager<User> userManager,
-        IServiceProvider services) : base(services)
+        IServiceProvider serviceProvider) : base(serviceProvider)
     {
         _userManager = userManager;
     }

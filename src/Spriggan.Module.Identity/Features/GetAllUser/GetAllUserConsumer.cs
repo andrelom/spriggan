@@ -17,7 +17,7 @@ public class GetAllUserConsumer : Consumer<GetAllUserRequest, Result<GetAllUserR
     public GetAllUserConsumer(
         IMapper mapper,
         UserManager<User> userManager,
-        IServiceProvider services) : base(services)
+        IServiceProvider serviceProvider) : base(serviceProvider)
     {
         _mapper = mapper;
         _userManager = userManager;
