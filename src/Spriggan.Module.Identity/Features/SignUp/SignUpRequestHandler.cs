@@ -24,9 +24,7 @@ public class SignUpRequestHandler : RequestHandler<SignUpRequest, Result<SignUpR
         _userManager = userManager;
     }
 
-    protected override async Task<Result<SignUpResponse>> Handle(
-        SignUpRequest request,
-        CancellationToken cancel = default)
+    protected override async Task<Result<SignUpResponse>> Handle(SignUpRequest request)
     {
         if (await IsUserAvailable(request) is { Ok: false } isUserAvailableResult)
         {

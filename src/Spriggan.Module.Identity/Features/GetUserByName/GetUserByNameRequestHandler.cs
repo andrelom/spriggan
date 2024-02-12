@@ -22,7 +22,7 @@ public class GetUserByNameRequestHandler : RequestHandler<GetUserByNameRequest, 
         _userManager = userManager;
     }
 
-    protected override async Task<Result<GetUserByNameResponse>> Handle(GetUserByNameRequest request, CancellationToken cancel = default)
+    protected override async Task<Result<GetUserByNameResponse>> Handle(GetUserByNameRequest request)
     {
         var user = await _userManager.FindByNameAsync(request.UserName);
 

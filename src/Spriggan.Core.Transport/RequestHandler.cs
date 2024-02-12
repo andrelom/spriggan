@@ -7,7 +7,7 @@ public abstract class RequestHandler<TRequest, TResponse> :
     where TRequest : class, IRequest<TResponse>
     where TResponse : class
 {
-    protected abstract Task<TResponse> Handle(TRequest request, CancellationToken cancel = default);
+    protected abstract Task<TResponse> Handle(TRequest request);
 
     public async Task Consume(ConsumeContext<TRequest> context)
     {

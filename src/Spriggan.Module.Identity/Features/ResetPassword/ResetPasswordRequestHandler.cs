@@ -16,7 +16,7 @@ public class ResetPasswordRequestHandler : RequestHandler<ResetPasswordRequest, 
         _userManager = userManager;
     }
 
-    protected override async Task<Result<ResetPasswordResponse>> Handle(ResetPasswordRequest request, CancellationToken cancel = default)
+    protected override async Task<Result<ResetPasswordResponse>> Handle(ResetPasswordRequest request)
     {
         var user = await _userManager.FindByNameAsync(request.UserName);
 

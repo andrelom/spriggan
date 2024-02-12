@@ -16,7 +16,7 @@ public class SendResetPasswordTokenRequestHandler : RequestHandler<SendResetPass
         _userManager = userManager;
     }
 
-    protected override async Task<Result<SendResetPasswordTokenResponse>> Handle(SendResetPasswordTokenRequest request, CancellationToken cancel = default)
+    protected override async Task<Result<SendResetPasswordTokenResponse>> Handle(SendResetPasswordTokenRequest request)
     {
         var user = await _userManager.FindByNameAsync(request.UserName);
 

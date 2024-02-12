@@ -23,7 +23,7 @@ public class SignInRequestHandler : RequestHandler<SignInRequest, Result<SignInR
         _securityTokenProvider = securityTokenProvider;
     }
 
-    protected override async Task<Result<SignInResponse>> Handle(SignInRequest request, CancellationToken cancel = default)
+    protected override async Task<Result<SignInResponse>> Handle(SignInRequest request)
     {
         if (await AuthorizeUser(request.UserName, request.Password) is not { } user)
         {

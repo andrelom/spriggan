@@ -22,7 +22,7 @@ public class GetAllUserRequestHandler : RequestHandler<GetAllUserRequest, Result
         _userManager = userManager;
     }
 
-    protected override Task<Result<GetAllUserResponse>> Handle(GetAllUserRequest request, CancellationToken cancel = default)
+    protected override Task<Result<GetAllUserResponse>> Handle(GetAllUserRequest request)
     {
         var users = _userManager.Users
             .OrderBy(user => user.NormalizedUserName)
