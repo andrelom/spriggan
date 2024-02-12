@@ -11,7 +11,7 @@ Some useful tips.
 Run the command at the root of your project, to update all packages.
 
 ```sh
-dotnet-outdated
+dotnet-outdated -u:prompt
 ```
 
 More at: https://github.com/dotnet-outdated/dotnet-outdated
