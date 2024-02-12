@@ -1,11 +1,71 @@
-version: '3'
+version: "3"
 
 services:
   #
-  # Spriggan.Web
-  spriggan-web:
-    build:
-      context: ./
-      dockerfile: ./docker/build/spriggan-web/Dockerfile
-    image: ${REGISTRY}/spriggan-web
-    container_name: spriggan-web
+  # Traefik
+  spriggan-traefik:
+    image: traefik:v3.0
+    container_name: spriggan-traefik
+    ports:
+      - 80:80
+      - 8080:8080
+    networks:
+      - spriggan
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    command:
+      - --api.insecure=true
+      - --providers.docker=true
+      - --providers.docker.exposedbydefault=false
+      - --entrypoints.web.address=:80
+  #
+  # RabbitMQ
+  spriggan-rabbitmq:
+    image: "rabbitmq:latest"
+    container_name: spriggan-rabbitmq
+    ports:
+      - 5672:5672
+    networks:
+      - spriggan
+    environment:
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}
+  #
+  # PostgreSQL
+  spriggan-postgres:
+    image: postgres
+    container_name: spriggan-postgres
+    restart: always
+    ports:
+      - 5432:5432
+    networks:
+      - spriggan
+    volumes:
+      - ./docker/data/postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+  #
+  # PostgreSQL Administration
+  spriggan-pgadmin:
+    image: dpage/pgadmin4
+    container_name: spriggan-pgadmin
+    restart: always
+    networks:
+      - spriggan
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
+    labels:
+      - traefik.enable=true
+      # Default
+      - traefik.http.services.spriggan-pgadmin.loadbalancer.server.port=80
+      - traefik.http.routers.spriggan-pgadmin.service=spriggan-pgadmin
+      - traefik.http.routers.spriggan-pgadmin.entrypoints=web
+      - traefik.http.routers.spriggan-pgadmin.rule=Host(`pgadmin.spriggan.localhost`)
+    depends_on:
+      - spriggan-postgres
+
+networks:
+  spriggan:
+    driver: bridge
