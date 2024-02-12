@@ -8,13 +8,13 @@ using Spriggan.Module.Identity.Contracts.Features.GetUserByName;
 
 namespace Spriggan.Module.Identity.Features.GetUserByName;
 
-public class GetUserByNameRequestHandler : RequestHandler<GetUserByNameRequest, Result<GetUserByNameResponse>>
+public class GetUserByNameConsumer : Consumer<GetUserByNameRequest, Result<GetUserByNameResponse>>
 {
     private readonly IMapper _mapper;
 
     private readonly UserManager<User> _userManager;
 
-    public GetUserByNameRequestHandler(
+    public GetUserByNameConsumer(
         IMapper mapper,
         UserManager<User> userManager)
     {

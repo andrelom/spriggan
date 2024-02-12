@@ -9,13 +9,13 @@ using Spriggan.Module.Identity.Providers;
 
 namespace Spriggan.Module.Identity.Features.SignIn;
 
-public class SignInRequestHandler : RequestHandler<SignInRequest, Result<SignInResponse>>
+public class SignInConsumer : Consumer<SignInRequest, Result<SignInResponse>>
 {
     private readonly UserManager<User> _userManager;
 
     private readonly ISecurityTokenProvider _securityTokenProvider;
 
-    public SignInRequestHandler(
+    public SignInConsumer(
         UserManager<User> userManager,
         ISecurityTokenProvider securityTokenProvider)
     {

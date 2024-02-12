@@ -2,7 +2,7 @@ using MassTransit;
 
 namespace Spriggan.Core.Transport;
 
-public abstract class RequestHandler<TRequest, TResponse> :
+public abstract class Consumer<TRequest, TResponse> :
     IConsumer<TRequest>
     where TRequest : class, IRequest<TResponse>
     where TResponse : class, IResult

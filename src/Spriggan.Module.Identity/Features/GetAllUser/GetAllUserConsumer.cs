@@ -8,13 +8,13 @@ using Spriggan.Module.Identity.Contracts.Features.GetAllUser;
 
 namespace Spriggan.Module.Identity.Features.GetAllUser;
 
-public class GetAllUserRequestHandler : RequestHandler<GetAllUserRequest, Result<GetAllUserResponse>>
+public class GetAllUserConsumer : Consumer<GetAllUserRequest, Result<GetAllUserResponse>>
 {
     private readonly IMapper _mapper;
 
     private readonly UserManager<User> _userManager;
 
-    public GetAllUserRequestHandler(
+    public GetAllUserConsumer(
         IMapper mapper,
         UserManager<User> userManager)
     {

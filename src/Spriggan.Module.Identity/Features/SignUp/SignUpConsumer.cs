@@ -10,14 +10,14 @@ using Spriggan.Module.Identity.Contracts.Features.SignUp;
 
 namespace Spriggan.Module.Identity.Features.SignUp;
 
-public class SignUpRequestHandler : RequestHandler<SignUpRequest, Result<SignUpResponse>>
+public class SignUpConsumer : Consumer<SignUpRequest, Result<SignUpResponse>>
 {
-    private readonly ILogger<SignUpRequestHandler> _logger;
+    private readonly ILogger<SignUpConsumer> _logger;
 
     private readonly UserManager<User> _userManager;
 
-    public SignUpRequestHandler(
-        ILogger<SignUpRequestHandler> logger,
+    public SignUpConsumer(
+        ILogger<SignUpConsumer> logger,
         UserManager<User> userManager)
     {
         _logger = logger;

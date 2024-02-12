@@ -7,11 +7,11 @@ using Spriggan.Module.Identity.Contracts.Features.ResetPassword;
 
 namespace Spriggan.Module.Identity.Features.ResetPassword;
 
-public class ResetPasswordRequestHandler : RequestHandler<ResetPasswordRequest, Result<ResetPasswordResponse>>
+public class ResetPasswordConsumer : Consumer<ResetPasswordRequest, Result<ResetPasswordResponse>>
 {
     private readonly UserManager<User> _userManager;
 
-    public ResetPasswordRequestHandler(UserManager<User> userManager)
+    public ResetPasswordConsumer(UserManager<User> userManager)
     {
         _userManager = userManager;
     }
