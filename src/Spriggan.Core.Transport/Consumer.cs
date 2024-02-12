@@ -46,18 +46,6 @@ public abstract class Consumer<TRequest, TResponse> :
 
     #region Private Methods
 
-    private ImmutableArray<string>? GetValidationMessages(TRequest request)
-    {
-        var context = new ValidationContext<TRequest>(request);
-
-        return _validators?
-            .Select(validator => validator.Validate(context))
-            .SelectMany(result => result.Errors)
-            .Where(failure => failure != null)
-            .Select(failure => failure.ErrorMessage)
-            .ToImmutableArray();
-    }
-
     private TResponse? HandleValidation(TRequest request)
     {
         if (_validators == null) return null;
