@@ -11,7 +11,9 @@ public class ResetPasswordConsumer : Consumer<ResetPasswordRequest, Result<Reset
 {
     private readonly UserManager<User> _userManager;
 
-    public ResetPasswordConsumer(UserManager<User> userManager)
+    public ResetPasswordConsumer(
+        UserManager<User> userManager,
+        IServiceProvider services) : base(services)
     {
         _userManager = userManager;
     }

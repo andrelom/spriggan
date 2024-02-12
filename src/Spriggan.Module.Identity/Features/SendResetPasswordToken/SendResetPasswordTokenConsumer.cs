@@ -11,7 +11,9 @@ public class SendResetPasswordTokenConsumer : Consumer<SendResetPasswordTokenReq
 {
     private readonly UserManager<User> _userManager;
 
-    public SendResetPasswordTokenConsumer(UserManager<User> userManager)
+    public SendResetPasswordTokenConsumer(
+        UserManager<User> userManager,
+        IServiceProvider services) : base(services)
     {
         _userManager = userManager;
     }

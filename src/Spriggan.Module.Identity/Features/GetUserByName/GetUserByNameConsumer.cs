@@ -16,7 +16,8 @@ public class GetUserByNameConsumer : Consumer<GetUserByNameRequest, Result<GetUs
 
     public GetUserByNameConsumer(
         IMapper mapper,
-        UserManager<User> userManager)
+        UserManager<User> userManager,
+        IServiceProvider services) : base(services)
     {
         _mapper = mapper;
         _userManager = userManager;

@@ -18,7 +18,8 @@ public class SignUpConsumer : Consumer<SignUpRequest, Result<SignUpResponse>>
 
     public SignUpConsumer(
         ILogger<SignUpConsumer> logger,
-        UserManager<User> userManager)
+        UserManager<User> userManager,
+        IServiceProvider services) : base(services)
     {
         _logger = logger;
         _userManager = userManager;
