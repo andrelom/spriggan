@@ -44,7 +44,7 @@ public class Bus : IBus
 
     private static IEnumerable<Type> GetGenericTypeDefinitions()
     {
-        return Dependencies.Types
+        return Dependencies.Domain
             .SelectMany(type => type.GetInterfaces())
             .Where(type => type.IsGenericType);
     }
