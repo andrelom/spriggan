@@ -32,13 +32,14 @@ public static class DependencyInjectionConfiguration
 
     private static void AddMassTransit(IServiceCollection services, IConfiguration configuration)
     {
+        var assemblies = Dependencies.Assemblies.ToArray();
         var options = configuration.Load<RabbitMqOptions>();
 
         // Bus: Local
         services.AddMassTransit<IBus.ILocal>(configurator =>
         {
             // Consumers.
-            configurator.AddConsumers(Dependencies.Assemblies.ToArray());
+            configurator.AddConsumers(assemblies);
 
             // In Memory Transport.
             configurator.UsingInMemory((context, cfg) =>
@@ -52,7 +53,7 @@ public static class DependencyInjectionConfiguration
         services.AddMassTransit<IBus.IRemote>(configurator =>
         {
             // Consumers.
-            configurator.AddConsumers(Dependencies.Assemblies.ToArray());
+            configurator.AddConsumers(assemblies);
 
             // RabbitMQ Transport.
             configurator.UsingRabbitMq((context, cfg) =>
