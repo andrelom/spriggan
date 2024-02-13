@@ -22,19 +22,19 @@ public class ExceptionBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest
         }
         catch (Exception ex)
         {
-            return await HandleException(ex);
+            return HandleException(ex);
         }
     }
 
     #region Private Methods
 
-    private Task<TResponse> HandleException(Exception ex)
+    private TResponse HandleException(Exception ex)
     {
         var id = Guid.NewGuid();
 
         _logger.LogError(ex, "Transport Exception Behavior ({0})", id);
 
-        return Task.FromResult(new TResponse
+        return new TResponse
         {
             Ok = false,
             Error = Errors.Whoops,
@@ -42,7 +42,7 @@ public class ExceptionBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest
             {
                 { "Trace", id },
             }
-        });
+        };
     }
 
     #endregion
