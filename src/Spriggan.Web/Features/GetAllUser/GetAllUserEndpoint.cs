@@ -3,7 +3,7 @@ using Spriggan.Core;
 
 namespace Spriggan.Web.Features.GetAllUser;
 
-public class GetAllUserEndpoint : Endpoint<GetAllUserRequest, Result<GetAllUserResponse>>
+public class GetAllUserEndpoint : Endpoint<GetAllUserRequest, IResult<GetAllUserResponse>>
 {
     public override void Configure()
     {
@@ -14,7 +14,7 @@ public class GetAllUserEndpoint : Endpoint<GetAllUserRequest, Result<GetAllUserR
 
     public override async Task HandleAsync(GetAllUserRequest request, CancellationToken token)
     {
-        var response = new Result<GetAllUserResponse>();
+        var response = await request.ExecuteAsync(token);
 
         await SendAsync(response, cancellation: token);
     }
