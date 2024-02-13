@@ -9,10 +9,10 @@ public static class Dependencies
 
     private static IImmutableList<Assembly> _assemblies = null!;
 
-    private static IImmutableList<Type> _types = null!;
+    private static IImmutableList<Type> _domain = null!;
 
     /// <summary>
-    /// It will return all assemblies available in the application domain.
+    /// It will return all assemblies available in the application.
     /// </summary>
     public static IImmutableList<Assembly> Assemblies
     {
@@ -27,13 +27,13 @@ public static class Dependencies
     /// <summary>
     /// It will return all types available in the application domain.
     /// </summary>
-    public static IImmutableList<Type> Types
+    public static IImmutableList<Type> Domain
     {
         get
         {
             Ensure();
 
-            return _types;
+            return _domain;
         }
     }
 
@@ -51,11 +51,9 @@ public static class Dependencies
         var assemblies = GetReferencedAssemblies(prefix).ToList();
         var locations = GetFiles(prefix, assemblies.Select(assembly => assembly.Location).Distinct());
 
-        assemblies.AddRange(locations.Select(GetAssembly));
-
         _initialized = true;
-        _assemblies = assemblies.ToImmutableList();
-        _types = assemblies.SelectMany(assembly => assembly.GetTypes()).ToImmutableList();
+        _assemblies = assemblies.Concat(locations.Select(GetAssembly)).ToImmutableList();
+        _domain = assemblies.SelectMany(assembly => assembly.GetTypes()).ToImmutableList();
     }
 
     #region Private Methods
