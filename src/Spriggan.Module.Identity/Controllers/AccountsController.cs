@@ -57,7 +57,7 @@ public class AccountsController : ControllerBase
 
     [UserRoles(Roles.Administrator.Name, Roles.User.Name)]
     [HttpPost]
-    [Route("forgotpassword")]
+    [Route("forgot-password")]
     [ProducesResponseType(typeof(Result<SendResetPasswordTokenResponse>), StatusCodes.Status200OK)]
     public async Task<IActionResult> ForgotPassword([FromBody] SendResetPasswordTokenRequest request)
     {
@@ -70,7 +70,7 @@ public class AccountsController : ControllerBase
 
     [UserRoles(Roles.Administrator.Name, Roles.User.Name)]
     [HttpPost]
-    [Route("resetpassword")]
+    [Route("reset-password")]
     [ProducesResponseType(typeof(Result<ResetPasswordResponse>), StatusCodes.Status200OK)]
     public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequest request)
     {
