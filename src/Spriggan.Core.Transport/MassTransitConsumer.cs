@@ -16,6 +16,8 @@ public class MassTransitConsumer<TRequest, TResponse> :
 
     public async Task Consume(ConsumeContext<TRequest> context)
     {
-        await _consumer.Consume(context.Message);
+        var response = await _consumer.Consume(context.Message);
+
+        await context.RespondAsync(response);
     }
 }
