@@ -25,7 +25,7 @@ public class Bus : IBus
     {
         Response<TResponse> response;
 
-        var type = typeof(IConsumer<TRequest>);
+        var type = typeof(IConsumer<TRequest, TResponse>);
         var isLocalBus = _types.Any(target => target == type);
 
         if (isLocalBus)
