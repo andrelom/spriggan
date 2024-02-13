@@ -2,6 +2,7 @@ using MassTransit;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Spriggan.Core.Extensions;
+using Spriggan.Core.Transport.Extensions;
 using Spriggan.Core.Transport.Options;
 
 namespace Spriggan.Core.Transport;
@@ -39,7 +40,7 @@ public static class DependencyInjectionConfiguration
         services.AddMassTransit<IBus.ILocal>(configurator =>
         {
             // Consumers.
-            configurator.AddConsumers(assemblies);
+            configurator.AddMassTransitConsumers();
 
             // In Memory Transport.
             configurator.UsingInMemory((context, cfg) =>
