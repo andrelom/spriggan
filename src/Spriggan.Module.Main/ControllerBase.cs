@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components;
 namespace Spriggan.Module.Main;
 
 [Route("main/[controller]")]
-public abstract class ControllerApi : Core.Web.ControllerApi
+public abstract class ControllerBase : Core.Web.ControllerBase
 {
     // Intentionally left empty.
 }

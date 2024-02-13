@@ -3,7 +3,7 @@
 namespace Spriggan.Module.Identity;
 
 [Route("v{version:apiVersion}/identity/[controller]")]
-public abstract class ControllerApi : Core.Web.ControllerApi
+public abstract class ControllerBase : Core.Web.ControllerBase
 {
     // Intentionally left empty.
 }

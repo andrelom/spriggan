@@ -15,7 +15,7 @@ using Spriggan.Module.Identity.Contracts.Features.SignUp;
 namespace Spriggan.Module.Identity.Controllers;
 
 [ApiVersion("1")]
-public class AccountsController : ControllerApi
+public class AccountsController : ControllerBase
 {
     private readonly IMediator _mediator;
 

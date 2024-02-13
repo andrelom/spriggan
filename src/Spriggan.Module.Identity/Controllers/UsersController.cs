@@ -11,7 +11,7 @@ using Spriggan.Module.Identity.Contracts.Features.GetUserByName;
 namespace Spriggan.Module.Identity.Controllers;
 
 [ApiVersion("1")]
-public class UsersController : ControllerApi
+public class UsersController : ControllerBase
 {
     private readonly IMediator _mediator;
 
