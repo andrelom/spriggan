@@ -9,6 +9,7 @@ public static class MassTransitExtensions
     {
         var massTransitConsumerGenericType = typeof(MassTransitConsumer<,>);
         var consumerGenericType = typeof(IConsumer<,>);
+
         var consumerTypes = Dependencies.Domain.Where(item => item.GetInterfaces().Any(type => type.IsGenericType && type.GetGenericTypeDefinition() == consumerGenericType));
 
         foreach (var consumerType in consumerTypes)
