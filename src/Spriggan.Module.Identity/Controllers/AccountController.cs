@@ -13,12 +13,12 @@ using Spriggan.Module.Identity.Contracts.Features.SignUp;
 
 namespace Spriggan.Module.Identity.Controllers;
 
-[Tags("Identity: Accounts")]
-public class AccountsController : ControllerBase
+[Tags("Identity: Account")]
+public class AccountController : ControllerBase
 {
     private readonly IMediator _mediator;
 
-    public AccountsController(IMediator mediator)
+    public AccountController(IMediator mediator)
     {
         _mediator = mediator;
     }
