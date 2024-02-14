@@ -7,7 +7,7 @@ public static class DependencyInjectionConfiguration
 {
     #region For: IServiceCollection
 
-    public static IServiceCollection AddModuleIdentity(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddModuleWorker(this IServiceCollection services, IConfiguration configuration)
     {
         return services;
     }
@@ -16,7 +16,7 @@ public static class DependencyInjectionConfiguration
 
     #region Private Methods: Add
 
-    private static void AddIdentity(IServiceCollection services)
+    private static void AddWorker(IServiceCollection services)
     {
         // Intentionally left empty.
     }
