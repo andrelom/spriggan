@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Quartz;
+using Spriggan.Module.Worker.Jobs;
 
 namespace Spriggan.Module.Worker;
 
@@ -26,13 +27,37 @@ public static class DependencyInjectionConfiguration
 
     private static void AddQuartz(IServiceCollectionQuartzConfigurator configurator)
     {
-        // Intentionally left empty.
+        configurator.SchedulerId = "Spriggan Worker";
+
+        configurator.UseTriggers();
+
+        configurator.UseSimpleTypeLoader();
+
+        configurator.UseInMemoryStore();
+
+        configurator.UseDefaultThreadPool(options =>
+        {
+            options.MaxConcurrency = 2;
+        });
     }
 
     private static void AddQuartzHostedService(QuartzHostedServiceOptions options)
     {
         // When shutting down we want jobs to complete gracefully.
         options.WaitForJobsToComplete = true;
+    }
+
+    #endregion
+
+    #region Private Methods: Extensions
+
+    private static void UseTriggers(this IServiceCollectionQuartzConfigurator configurator)
+    {
+        // Trigger: Example
+        configurator.AddJob<ExampleJob>(job => job
+            .StoreDurably()
+            .WithDescription("Example trigger")
+        );
     }
 
     #endregion
