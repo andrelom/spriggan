@@ -52,6 +52,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spriggan.Module.Main.Contra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spriggan.Module.Main", "src\Spriggan.Module.Main\Spriggan.Module.Main.csproj", "{62817AC4-AB1C-4292-8FAD-D1D52224ED94}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Spriggan.Module.Worker", "Spriggan.Module.Worker", "{A503CC74-DFBF-4156-8E61-744A541EAB74}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spriggan.Module.Worker", "src\Spriggan.Module.Worker\Spriggan.Module.Worker.csproj", "{6B2B7A5E-520D-498C-9B6E-F8FD3BBB05CE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,6 +85,8 @@ Global
 		{04B3AFC4-1192-4E16-A308-6A4140F9E11C} = {7EE6C50A-5F58-4C26-8843-985CF1E50A83}
 		{4A548B99-773E-4791-9551-20DD4331DC80} = {04B3AFC4-1192-4E16-A308-6A4140F9E11C}
 		{62817AC4-AB1C-4292-8FAD-D1D52224ED94} = {04B3AFC4-1192-4E16-A308-6A4140F9E11C}
+		{A503CC74-DFBF-4156-8E61-744A541EAB74} = {7EE6C50A-5F58-4C26-8843-985CF1E50A83}
+		{6B2B7A5E-520D-498C-9B6E-F8FD3BBB05CE} = {A503CC74-DFBF-4156-8E61-744A541EAB74}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{D050F364-352E-4C71-AA60-70997BF7C16F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -147,5 +153,9 @@ Global
 		{62817AC4-AB1C-4292-8FAD-D1D52224ED94}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{62817AC4-AB1C-4292-8FAD-D1D52224ED94}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{62817AC4-AB1C-4292-8FAD-D1D52224ED94}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B2B7A5E-520D-498C-9B6E-F8FD3BBB05CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B2B7A5E-520D-498C-9B6E-F8FD3BBB05CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B2B7A5E-520D-498C-9B6E-F8FD3BBB05CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B2B7A5E-520D-498C-9B6E-F8FD3BBB05CE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
