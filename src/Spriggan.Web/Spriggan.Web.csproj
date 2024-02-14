@@ -24,6 +24,7 @@
       <ProjectReference Include="..\Spriggan.Foundation.Mail\Spriggan.Foundation.Mail.csproj" />
       <ProjectReference Include="..\Spriggan.Module.Identity\Spriggan.Module.Identity.csproj" />
       <ProjectReference Include="..\Spriggan.Module.Main\Spriggan.Module.Main.csproj" />
+      <ProjectReference Include="..\Spriggan.Module.Worker\Spriggan.Module.Worker.csproj" />
     </ItemGroup>
 
 </Project>
