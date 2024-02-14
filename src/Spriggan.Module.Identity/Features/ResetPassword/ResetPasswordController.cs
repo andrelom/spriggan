@@ -11,8 +11,7 @@ using ControllerBase = Spriggan.Core.Web.ControllerBase;
 
 namespace Spriggan.Module.Identity.Features.ResetPassword;
 
-[Tags("Accounts")]
-[ApiVersion("1")]
+[ApiVersion("1"), Tags("Accounts")]
 [Route("v{version:apiVersion}/identity/reset-password")]
 public class ResetPasswordController : ControllerBase
 {

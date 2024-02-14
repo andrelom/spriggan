@@ -10,8 +10,7 @@ using ControllerBase = Spriggan.Core.Web.ControllerBase;
 
 namespace Spriggan.Module.Identity.Features.SendResetPasswordToken;
 
-[Tags("Accounts")]
-[ApiVersion("1")]
+[ApiVersion("1"), Tags("Accounts")]
 [Route("v{version:apiVersion}/identity/forgot-password")]
 public class SendResetPasswordTokenController : ControllerBase
 {

@@ -10,8 +10,7 @@ using ControllerBase = Spriggan.Core.Web.ControllerBase;
 
 namespace Spriggan.Module.Identity.Features.GetUserByName;
 
-[Tags("Users")]
-[ApiVersion("1")]
+[ApiVersion("1"), Tags("Users")]
 [Route("v{version:apiVersion}/identity/users")]
 public class GetUserByNameController : ControllerBase
 {

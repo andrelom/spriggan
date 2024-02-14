@@ -9,8 +9,7 @@ using ControllerBase = Spriggan.Core.Web.ControllerBase;
 
 namespace Spriggan.Module.Identity.Features.SignIn;
 
-[Tags("Accounts")]
-[ApiVersion("1")]
+[ApiVersion("1"), Tags("Accounts")]
 [Route("v{version:apiVersion}/identity/signin")]
 public class SignInController : ControllerBase
 {
