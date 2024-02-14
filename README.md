@@ -20,6 +20,14 @@ dotnet-outdated -u:prompt
 
 More at: https://github.com/dotnet-outdated/dotnet-outdated
 
+### Keep Entity Framework Tool Updated
+
+Update the tool using the following command:
+
+```sh
+dotnet tool update --global dotnet-ef
+```
+
 ## Project Status
 
 This project is currently under development and is not considered stable.
