@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Quartz;
 
 namespace Spriggan.Module.Worker;
 
@@ -9,6 +10,12 @@ public static class DependencyInjectionConfiguration
 
     public static IServiceCollection AddModuleWorker(this IServiceCollection services, IConfiguration configuration)
     {
+        //
+        // Libraries
+
+        // DI from "Quartz".
+        services.AddQuartz(AddQuartz);
+
         return services;
     }
 
@@ -16,7 +23,7 @@ public static class DependencyInjectionConfiguration
 
     #region Private Methods: Add
 
-    private static void AddWorker(IServiceCollection services)
+    private static void AddQuartz(IServiceCollectionQuartzConfigurator configurator)
     {
         // Intentionally left empty.
     }
