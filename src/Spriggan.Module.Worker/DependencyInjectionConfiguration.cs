@@ -15,6 +15,7 @@ public static class DependencyInjectionConfiguration
 
         // DI from "Quartz".
         services.AddQuartz(AddQuartz);
+        services.AddQuartzHostedService(AddQuartzHostedService);
 
         return services;
     }
@@ -26,6 +27,12 @@ public static class DependencyInjectionConfiguration
     private static void AddQuartz(IServiceCollectionQuartzConfigurator configurator)
     {
         // Intentionally left empty.
+    }
+
+    private static void AddQuartzHostedService(QuartzHostedServiceOptions options)
+    {
+        // When shutting down we want jobs to complete gracefully.
+        options.WaitForJobsToComplete = true;
     }
 
     #endregion
