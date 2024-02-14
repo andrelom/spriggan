@@ -6,13 +6,14 @@ using Spriggan.Core;
 using Spriggan.Data.Identity.Contracts.Values;
 using Spriggan.Foundation.Identity.Attributes;
 using Spriggan.Module.Identity.Contracts.Features.GetUserByName;
+using ControllerBase = Spriggan.Core.Web.ControllerBase;
 
 namespace Spriggan.Module.Identity.Features.GetUserByName;
 
 [Tags("Users")]
 [ApiVersion("1")]
 [Route("v{version:apiVersion}/identity/users")]
-public class GetUserByNameController : Core.Web.ControllerBase
+public class GetUserByNameController : ControllerBase
 {
     private readonly IMediator _mediator;
 

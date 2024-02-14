@@ -6,13 +6,14 @@ using Spriggan.Core;
 using Spriggan.Data.Identity.Contracts.Values;
 using Spriggan.Foundation.Identity.Attributes;
 using Spriggan.Module.Identity.Contracts.Features.SendResetPasswordToken;
+using ControllerBase = Spriggan.Core.Web.ControllerBase;
 
 namespace Spriggan.Module.Identity.Features.SendResetPasswordToken;
 
 [Tags("Accounts")]
 [ApiVersion("1")]
 [Route("v{version:apiVersion}/identity/forgot-password")]
-public class SendResetPasswordTokenController : Core.Web.ControllerBase
+public class SendResetPasswordTokenController : ControllerBase
 {
     private readonly IMediator _mediator;
 

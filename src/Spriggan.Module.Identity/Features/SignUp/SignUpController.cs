@@ -6,13 +6,14 @@ using Spriggan.Core;
 using Spriggan.Data.Identity.Contracts.Values;
 using Spriggan.Foundation.Identity.Attributes;
 using Spriggan.Module.Identity.Contracts.Features.SignUp;
+using ControllerBase = Spriggan.Core.Web.ControllerBase;
 
 namespace Spriggan.Module.Identity.Features.SignUp;
 
 [Tags("Accounts")]
 [ApiVersion("1")]
 [Route("v{version:apiVersion}/identity/signup")]
-public class SignUpController : Core.Web.ControllerBase
+public class SignUpController : ControllerBase
 {
     private readonly IMediator _mediator;
 

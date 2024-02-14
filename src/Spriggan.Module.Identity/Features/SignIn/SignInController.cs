@@ -5,13 +5,14 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Spriggan.Core;
 using Spriggan.Module.Identity.Contracts.Features.SignIn;
+using ControllerBase = Spriggan.Core.Web.ControllerBase;
 
 namespace Spriggan.Module.Identity.Features.SignIn;
 
 [Tags("Accounts")]
 [ApiVersion("1")]
 [Route("v{version:apiVersion}/identity/signin")]
-public class SignInController : Core.Web.ControllerBase
+public class SignInController : ControllerBase
 {
     private readonly IMediator _mediator;
 

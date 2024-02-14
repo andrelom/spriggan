@@ -7,13 +7,14 @@ using Spriggan.Data.Identity.Contracts.Values;
 using Spriggan.Foundation.Identity.Attributes;
 using Spriggan.Module.Identity.Contracts;
 using Spriggan.Module.Identity.Contracts.Features.ResetPassword;
+using ControllerBase = Spriggan.Core.Web.ControllerBase;
 
 namespace Spriggan.Module.Identity.Features.ResetPassword;
 
 [Tags("Accounts")]
 [ApiVersion("1")]
 [Route("v{version:apiVersion}/identity/reset-password")]
-public class ResetPasswordController : Core.Web.ControllerBase
+public class ResetPasswordController : ControllerBase
 {
     private readonly IMediator _mediator;
 
