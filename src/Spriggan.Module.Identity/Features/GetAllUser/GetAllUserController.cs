@@ -1,4 +1,3 @@
-using Asp.Versioning;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,8 +9,8 @@ using ControllerBase = Spriggan.Core.Web.ControllerBase;
 
 namespace Spriggan.Module.Identity.Features.GetAllUser;
 
-[ApiVersion("1"), Tags("Users")]
-[Route("v{version:apiVersion}/identity/users")]
+[Tags("Users")]
+[Route("/identity/users")]
 public class GetAllUserController : ControllerBase
 {
     private readonly IMediator _mediator;

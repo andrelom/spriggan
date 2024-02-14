@@ -31,9 +31,6 @@ public static class DependencyInjectionConfiguration
         //
         // Libraries
 
-        // DI from "Asp.Versioning.Mvc".
-        services.AddApiVersioning();
-
         // DI from "Microsoft.Extensions.Diagnostics.HealthChecks".
         services.AddHealthChecks();
 

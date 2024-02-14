@@ -1,4 +1,3 @@
-using Asp.Versioning;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,8 +9,8 @@ using ControllerBase = Spriggan.Core.Web.ControllerBase;
 
 namespace Spriggan.Module.Identity.Features.SignUp;
 
-[ApiVersion("1"), Tags("Accounts")]
-[Route("v{version:apiVersion}/identity/signup")]
+[Tags("Accounts")]
+[Route("/identity/signup")]
 public class SignUpController : ControllerBase
 {
     private readonly IMediator _mediator;

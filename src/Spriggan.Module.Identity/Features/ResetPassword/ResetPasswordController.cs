@@ -1,4 +1,3 @@
-using Asp.Versioning;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,8 +10,8 @@ using ControllerBase = Spriggan.Core.Web.ControllerBase;
 
 namespace Spriggan.Module.Identity.Features.ResetPassword;
 
-[ApiVersion("1"), Tags("Accounts")]
-[Route("v{version:apiVersion}/identity/reset-password")]
+[Tags("Accounts")]
+[Route("/identity/reset-password")]
 public class ResetPasswordController : ControllerBase
 {
     private readonly IMediator _mediator;

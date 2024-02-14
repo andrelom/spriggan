@@ -1,5 +1,3 @@
-using Asp.Versioning;
-using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Spriggan.Core.Web.Swagger;
@@ -21,14 +19,11 @@ internal static class SwaggerGenOptionsExtensions
         // SchemaId already used for different type.
         options.CustomSchemaIds(type => type.ToString());
 
-        // Replace "v{version:apiVersion}" to the actual version of the corresponding Swagger document.
+        // Replace "" to the actual version of the corresponding Swagger document.
         options.DocumentFilter<VersionDocumentFilter>();
 
         // Remove the parameter version, without it we will have the version as parameter for all endpoints in the Swagger UI.
         options.OperationFilter<VersionOperationFilter>();
-
-        // Used to exclude endpoint mapped to not specified in Swagger version.
-        options.DocInclusionPredicate(GetDocInclusionPredicate);
 
         // Avoid Swagger generation error due to same method name in different versions.
         options.ResolveConflictingActions(descriptions => descriptions.First());
@@ -58,22 +53,4 @@ internal static class SwaggerGenOptionsExtensions
 
         return options;
     }
-
-    #region Private Methods
-
-    private static bool GetDocInclusionPredicate(string version, ApiDescription description)
-    {
-        if (!description.TryGetMethodInfo(out var method) || method.DeclaringType == null)
-        {
-            return false;
-        }
-
-        return method.DeclaringType
-            .GetCustomAttributes(true)
-            .OfType<ApiVersionAttribute>()
-            .SelectMany(attribute => attribute.Versions)
-            .Any(value => $"v{value}".Equals(version, StringComparison.OrdinalIgnoreCase));
-    }
-
-    #endregion
 }
