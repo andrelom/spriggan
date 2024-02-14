@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Spriggan.Core.Web;
 
 [ApiController]
-[Route("[controller]")]
+[Route("v{version:apiVersion}/[controller]")]
 public abstract class ControllerBase : Microsoft.AspNetCore.Mvc.ControllerBase
 {
     [ApiExplorerSettings(IgnoreApi = true)]
