@@ -2,6 +2,10 @@
 
 Sample .NET reference for web applications.
 
+## Development
+
+The project architecture is based on the [REPR Design Pattern](https://deviq.com/design-patterns/repr-design-pattern).
+
 ## Miscellaneous
 
 Some useful tips.
