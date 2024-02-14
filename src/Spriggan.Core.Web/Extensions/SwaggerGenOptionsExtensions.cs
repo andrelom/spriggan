@@ -19,12 +19,6 @@ internal static class SwaggerGenOptionsExtensions
         // SchemaId already used for different type.
         options.CustomSchemaIds(type => type.ToString());
 
-        // Replace "" to the actual version of the corresponding Swagger document.
-        options.DocumentFilter<VersionDocumentFilter>();
-
-        // Remove the parameter version, without it we will have the version as parameter for all endpoints in the Swagger UI.
-        options.OperationFilter<VersionOperationFilter>();
-
         // Avoid Swagger generation error due to same method name in different versions.
         options.ResolveConflictingActions(descriptions => descriptions.First());
 
