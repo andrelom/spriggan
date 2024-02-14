@@ -10,6 +10,7 @@ using Spriggan.Foundation.Identity;
 using Spriggan.Foundation.Mail;
 using Spriggan.Module.Identity;
 using Spriggan.Module.Main;
+using Spriggan.Module.Worker;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using Swashbuckle.AspNetCore.SwaggerUI;
 
@@ -68,7 +69,8 @@ public class Startup
 
         services
             .AddModuleMain(_configuration)
-            .AddModuleIdentity(_configuration);
+            .AddModuleIdentity(_configuration)
+            .AddModuleWorker(_configuration);
     }
 
     // Be aware that any change in method call order can result in unexpected behavior.
