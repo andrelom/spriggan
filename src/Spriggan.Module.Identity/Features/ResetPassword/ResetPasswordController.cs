@@ -10,7 +10,7 @@ using ControllerBase = Spriggan.Core.Web.ControllerBase;
 
 namespace Spriggan.Module.Identity.Features.ResetPassword;
 
-[Tags("Accounts")]
+[Tags("Identity")]
 [Route("/identity/reset-password")]
 public class ResetPasswordController : ControllerBase
 {

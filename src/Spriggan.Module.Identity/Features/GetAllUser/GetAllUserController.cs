@@ -9,7 +9,7 @@ using ControllerBase = Spriggan.Core.Web.ControllerBase;
 
 namespace Spriggan.Module.Identity.Features.GetAllUser;
 
-[Tags("Users")]
+[Tags("Identity: Users")]
 [Route("/identity/users")]
 public class GetAllUserController : ControllerBase
 {

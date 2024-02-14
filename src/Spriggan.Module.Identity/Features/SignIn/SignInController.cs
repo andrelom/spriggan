@@ -8,7 +8,7 @@ using ControllerBase = Spriggan.Core.Web.ControllerBase;
 
 namespace Spriggan.Module.Identity.Features.SignIn;
 
-[Tags("Accounts")]
+[Tags("Identity")]
 [Route("/identity/signin")]
 public class SignInController : ControllerBase
 {
