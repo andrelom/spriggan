@@ -10,6 +10,7 @@ using Spriggan.Module.Identity.Contracts.Features.ResetPassword;
 using Spriggan.Module.Identity.Contracts.Features.SendResetPasswordToken;
 using Spriggan.Module.Identity.Contracts.Features.SignIn;
 using Spriggan.Module.Identity.Contracts.Features.SignUp;
+using ControllerBase = Spriggan.Core.Web.ControllerBase;
 
 namespace Spriggan.Module.Identity.Controllers;
 
