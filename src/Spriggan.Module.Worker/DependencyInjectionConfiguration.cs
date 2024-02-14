@@ -29,6 +29,8 @@ public static class DependencyInjectionConfiguration
     {
         configurator.SchedulerId = "Spriggan Worker";
 
+        configurator.UseJobs();
+
         configurator.UseTriggers();
 
         configurator.UseSimpleTypeLoader();
@@ -51,12 +53,27 @@ public static class DependencyInjectionConfiguration
 
     #region Private Methods: Extensions
 
+    private static void UseJobs(this IServiceCollectionQuartzConfigurator configurator)
+    {
+        // Job: Example
+        configurator.AddJob<ExampleJob>(Keys.Example, job => job
+            .StoreDurably()
+            .WithDescription("Example Job")
+        );
+    }
+
     private static void UseTriggers(this IServiceCollectionQuartzConfigurator configurator)
     {
         // Trigger: Example
-        configurator.AddJob<ExampleJob>(job => job
-            .StoreDurably()
-            .WithDescription("Example trigger")
+        configurator.AddTrigger(trigger => trigger
+            .WithIdentity("Example Trigger")
+            .WithDescription("Example Trigger")
+            .ForJob(Keys.Example)
+            .StartNow()
+            .WithSimpleSchedule(schedule => schedule
+                .WithInterval(TimeSpan.FromMicroseconds(1))
+                .RepeatForever()
+            )
         );
     }
 
