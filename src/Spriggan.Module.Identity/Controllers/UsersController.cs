@@ -6,6 +6,7 @@ using Spriggan.Data.Identity.Contracts.Values;
 using Spriggan.Foundation.Identity.Attributes;
 using Spriggan.Module.Identity.Contracts.Features.GetAllUser;
 using Spriggan.Module.Identity.Contracts.Features.GetUserByName;
+using ControllerBase = Spriggan.Core.Web.ControllerBase;
 
 namespace Spriggan.Module.Identity.Controllers;
 
