@@ -4,5 +4,5 @@ namespace Spriggan.Module.Worker;
 
 public static class Keys
 {
-    public static JobKey Example = new("example", "default");
+    public static readonly JobKey Example = new("example", "default");
 }
