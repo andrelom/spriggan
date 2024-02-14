@@ -58,6 +58,7 @@ public static class DependencyInjectionConfiguration
         // Job: Example
         configurator.AddJob<ExampleJob>(Keys.Example, job => job
             .StoreDurably()
+            .WithIdentity("Example Job")
             .WithDescription("Example Job")
         );
     }
