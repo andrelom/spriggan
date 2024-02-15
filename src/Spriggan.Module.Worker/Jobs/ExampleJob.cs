@@ -7,7 +7,7 @@ public class ExampleJob : IJob
 {
     private readonly ILogger<ExampleJob> _logger;
 
-    public static readonly JobKey Key = new("example", "default");
+    public static readonly JobKey Key = new("example");
 
     public ExampleJob(ILogger<ExampleJob> logger)
     {
