@@ -12,7 +12,7 @@ public static class ExampleExtensions
         );
     }
 
-    public static void UseExampleTrigger(this IServiceCollectionQuartzConfigurator configurator)
+    public static void UseExampleTriggers(this IServiceCollectionQuartzConfigurator configurator)
     {
         configurator.AddTrigger(trigger => trigger
             .ForJob(ExampleJob.Key)
