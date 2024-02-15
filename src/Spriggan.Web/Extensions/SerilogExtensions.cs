@@ -8,7 +8,7 @@ public static class SerilogExtensions
     public static void AddSerilog(this IServiceCollection services)
     {
         const string path = "./tmp/logs/{Date}.log";
-        const string template = "{Timestamp:yyyy-MM-dd HH:mm:ss} [{Level:u3}] {Message:lj}{NewLine}{Exception}";
+        const string template = "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level}] {Message}{NewLine}{Exception}";
 
         Log.Logger = new LoggerConfiguration()
             .WriteTo.RollingFile(path, LogEventLevel.Verbose, template)
