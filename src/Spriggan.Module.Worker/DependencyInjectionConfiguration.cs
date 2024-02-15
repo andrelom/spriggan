@@ -35,11 +35,19 @@ public static class DependencyInjectionConfiguration
 
         configurator.UseSimpleTypeLoader();
 
-        configurator.UseInMemoryStore();
-
         configurator.UseDefaultThreadPool(options =>
         {
             options.MaxConcurrency = 2;
+        });
+
+        configurator.UsePersistentStore(options =>
+        {
+            options.UseBinarySerializer();
+
+            options.UsePostgres(provider =>
+            {
+                provider.ConnectionStringName = "Main";
+            });
         });
     }
 
