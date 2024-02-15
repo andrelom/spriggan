@@ -62,7 +62,7 @@ public static class DependencyInjectionConfiguration
 
     #endregion
 
-    #region Private Methods: Extensions
+    #region Private Methods: Jobs & Triggers
 
     private static void UseJobs(this IServiceCollectionQuartzConfigurator configurator)
     {
