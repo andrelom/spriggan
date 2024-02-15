@@ -46,7 +46,7 @@ public static class DependencyInjectionConfiguration
 
             options.UsePostgres(provider =>
             {
-                provider.ConnectionStringName = "Main";
+                provider.ConnectionStringName = "Worker";
             });
         });
     }
