@@ -14,7 +14,7 @@ public class ExampleJob : IJob
 
     public Task Execute(IJobExecutionContext context)
     {
-        _logger.LogInformation("The '{0}' job is executing.", nameof(ExampleJob));
+        _logger.LogInformation("The {0} job is executing.", nameof(ExampleJob));
 
         return Task.CompletedTask;
     }
