@@ -25,7 +25,7 @@ public static class DependencyInjectionConfiguration
 
     #region Private Methods
 
-    private static void Configure(this IServiceCollectionQuartzConfigurator configurator)
+    private static void UseWorker(this IServiceCollectionQuartzConfigurator configurator)
     {
         // Jobs
         configurator.UseExampleJob();
@@ -42,7 +42,7 @@ public static class DependencyInjectionConfiguration
     {
         configurator.SchedulerId = "Spriggan Worker";
 
-        configurator.Configure();
+        configurator.UseWorker();
 
         configurator.UseSimpleTypeLoader();
 
