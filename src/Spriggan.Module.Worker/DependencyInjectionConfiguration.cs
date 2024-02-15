@@ -41,7 +41,7 @@ public static class DependencyInjectionConfiguration
 
         configurator.UsePersistentStore(options =>
         {
-            options.UseBinarySerializer();
+            options.UseNewtonsoftJsonSerializer();
 
             options.UsePostgres(provider =>
             {
