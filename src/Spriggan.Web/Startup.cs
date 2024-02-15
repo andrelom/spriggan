@@ -11,6 +11,7 @@ using Spriggan.Foundation.Mail;
 using Spriggan.Module.Identity;
 using Spriggan.Module.Main;
 using Spriggan.Module.Worker;
+using Spriggan.Web.Extensions;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using Swashbuckle.AspNetCore.SwaggerUI;
 
@@ -27,6 +28,12 @@ public class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {
+        //
+        // Libraries
+
+        // DI from "Serilog".
+        services.AddSerilog();
+
         //
         // Core
 
