@@ -18,6 +18,7 @@ public static class QuartzConfiguration
     {
         // Trigger: Example
         configurator.AddTrigger(trigger => trigger
+            .WithIdentity("Example Trigger")
             .ForJob(ExampleJob.Key)
             .StartNow()
             .WithSimpleSchedule(schedule => schedule
