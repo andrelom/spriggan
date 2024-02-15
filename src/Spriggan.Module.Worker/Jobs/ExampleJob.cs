@@ -1,7 +1,7 @@
 using Microsoft.Extensions.Logging;
 using Quartz;
 
-namespace Spriggan.Module.Worker.Features.Example;
+namespace Spriggan.Module.Worker.Jobs;
 
 public class ExampleJob : IJob
 {
