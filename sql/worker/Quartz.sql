@@ -1,4 +1,9 @@
-/* Quartz (v3.8.0) SQL Schema: https://github.com/quartznet/quartznet/blob/main/database/tables/tables_postgres.sql */
+/**
+ * Quartz SQL Schema
+ *
+ * Updated: 14/02/2024
+ * Reference: https://github.com/quartznet/quartznet/blob/main/database/tables/tables_postgres.sql
+ */
 
 set client_min_messages = WARNING;
 DROP TABLE IF EXISTS qrtz_fired_triggers;
