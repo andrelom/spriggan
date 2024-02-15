@@ -37,9 +37,9 @@ function apply {
 }
 
 function sql {
-  rm -f "./sql/Main/Migrations.sql"
+  rm -f "./sql/main/Migrations.sql"
 
-  dotnet ef migrations script --idempotent --project "src/Spriggan.Data.Main" -s "src/Spriggan.Web" -c "Spriggan.Data.Main.ApplicationDbContext" -o "./sql/Main/Migrations.sql"
+  dotnet ef migrations script --idempotent --project "src/Spriggan.Data.Main" -s "src/Spriggan.Web" -c "Spriggan.Data.Main.ApplicationDbContext" -o "./sql/main/Migrations.sql"
 }
 
 # Main
