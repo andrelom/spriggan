@@ -31,7 +31,7 @@ public static class DependencyInjectionConfiguration
         configurator.UseExampleJob();
 
         // Triggers
-        configurator.UseExampleTrigger();
+        configurator.UseExampleTriggers();
     }
 
     #endregion
