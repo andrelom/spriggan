@@ -47,6 +47,9 @@ public static class DependencyInjectionConfiguration
     {
         // When shutting down we want jobs to complete gracefully.
         options.WaitForJobsToComplete = true;
+
+        // After server startup, delays before starting triggers.
+        options.StartDelay = TimeSpan.FromMinutes(1);
     }
 
     #endregion
