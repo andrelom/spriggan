@@ -1,11 +1,21 @@
+using Microsoft.Extensions.Logging;
 using Quartz;
 
 namespace Spriggan.Module.Worker.Jobs;
 
 public class ExampleJob : IJob
 {
-    public async Task Execute(IJobExecutionContext context)
+    private readonly ILogger<ExampleJob> _logger;
+
+    public ExampleJob(ILogger<ExampleJob> logger)
     {
-        await Console.Out.WriteLineAsync("The 'Example' job is executing.");
+        _logger = logger;
+    }
+
+    public Task Execute(IJobExecutionContext context)
+    {
+        _logger.LogInformation("The '{0}' job is executing.", nameof(ExampleJob));
+
+        return Task.CompletedTask;
     }
 }
