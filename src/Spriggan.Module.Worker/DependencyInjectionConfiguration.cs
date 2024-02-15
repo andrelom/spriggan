@@ -69,7 +69,7 @@ public static class DependencyInjectionConfiguration
             .ForJob(Keys.Example)
             .StartNow()
             .WithSimpleSchedule(schedule => schedule
-                .WithInterval(TimeSpan.FromSeconds(1))
+                .WithInterval(TimeSpan.FromSeconds(30))
                 .RepeatForever()
             )
         );
