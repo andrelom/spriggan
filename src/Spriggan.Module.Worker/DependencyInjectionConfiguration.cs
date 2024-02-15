@@ -1,7 +1,6 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Quartz;
-using Spriggan.Module.Worker.Jobs;
 
 namespace Spriggan.Module.Worker;
 
@@ -58,32 +57,6 @@ public static class DependencyInjectionConfiguration
 
         // After server startup, delays before starting triggers.
         options.StartDelay = TimeSpan.FromMinutes(1);
-    }
-
-    #endregion
-
-    #region Private Methods: Jobs & Triggers
-
-    private static void UseJobs(this IServiceCollectionQuartzConfigurator configurator)
-    {
-        // Job: Example
-        configurator.AddJob<ExampleJob>(job => job
-            .WithIdentity(Keys.Example)
-            .StoreDurably()
-        );
-    }
-
-    private static void UseTriggers(this IServiceCollectionQuartzConfigurator configurator)
-    {
-        // Trigger: Example
-        configurator.AddTrigger(trigger => trigger
-            .ForJob(Keys.Example)
-            .StartNow()
-            .WithSimpleSchedule(schedule => schedule
-                .WithInterval(TimeSpan.FromMinutes(1))
-                .RepeatForever()
-            )
-        );
     }
 
     #endregion
