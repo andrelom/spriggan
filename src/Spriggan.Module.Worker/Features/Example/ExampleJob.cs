@@ -1,11 +1,13 @@
 using Microsoft.Extensions.Logging;
 using Quartz;
 
-namespace Spriggan.Module.Worker.Jobs;
+namespace Spriggan.Module.Worker.Features.Example;
 
 public class ExampleJob : IJob
 {
     private readonly ILogger<ExampleJob> _logger;
+
+    public static readonly JobKey Key = new("example", "default");
 
     public ExampleJob(ILogger<ExampleJob> logger)
     {

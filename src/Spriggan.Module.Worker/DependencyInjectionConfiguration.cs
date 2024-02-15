@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Quartz;
+using Spriggan.Module.Worker.Features.Example;
 
 namespace Spriggan.Module.Worker;
 
@@ -22,15 +23,26 @@ public static class DependencyInjectionConfiguration
 
     #endregion
 
+    #region Private Methods
+
+    private static void Configure(this IServiceCollectionQuartzConfigurator configurator)
+    {
+        // Jobs
+        configurator.UseExampleJob();
+
+        // Triggers
+        configurator.UseExampleTrigger();
+    }
+
+    #endregion
+
     #region Private Methods: Add
 
     private static void AddQuartz(IServiceCollectionQuartzConfigurator configurator)
     {
         configurator.SchedulerId = "Spriggan Worker";
 
-        configurator.UseJobs();
-
-        configurator.UseTriggers();
+        configurator.Configure();
 
         configurator.UseSimpleTypeLoader();
 
