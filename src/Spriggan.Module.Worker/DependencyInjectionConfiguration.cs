@@ -56,10 +56,9 @@ public static class DependencyInjectionConfiguration
     private static void UseJobs(this IServiceCollectionQuartzConfigurator configurator)
     {
         // Job: Example
-        configurator.AddJob<ExampleJob>(Keys.Example, job => job
+        configurator.AddJob<ExampleJob>(job => job
             .StoreDurably()
-            .WithIdentity("Example Job")
-            .WithDescription("Example Job")
+            .WithIdentity(Keys.Example)
         );
     }
 
@@ -67,8 +66,6 @@ public static class DependencyInjectionConfiguration
     {
         // Trigger: Example
         configurator.AddTrigger(trigger => trigger
-            .WithIdentity("Example Trigger")
-            .WithDescription("Example Trigger")
             .ForJob(Keys.Example)
             .StartNow()
             .WithSimpleSchedule(schedule => schedule
