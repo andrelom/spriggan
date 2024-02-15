@@ -26,7 +26,7 @@ public static class DependencyInjectionConfiguration
 
     private static void AddQuartz(IServiceCollectionQuartzConfigurator configurator)
     {
-        configurator.SchedulerId = "Spriggan Worker";
+        configurator.SchedulerId = "Worker";
 
         configurator.UseJobs();
 
